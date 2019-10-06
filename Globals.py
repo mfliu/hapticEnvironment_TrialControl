@@ -31,8 +31,7 @@ def getListenerSocket():
   return listenerSocket 
 
 
-HOME_PATH = "/home/mfl24/Documents/chaiProjects/trialControl/"
-UTILS_PATH = "/home/mfl24/Documents/chaiProjects/trialControl/utils/"
-FUNCTIONS_PATH = "/home/mfl24/Documents/chaiProjects/trialControl/trialControl/"
+HOME_PATH = "/home/mfl24/Documents/chaiProjects/hapticEnvironment_TrialControl/"
+UTILS_PATH = "/home/mfl24/Documents/chaiProjects/hapticEnvironment_TrialControl/utils/"
 
 CHAI_DATA = md.M_HAPTIC_DATA_STREAM() 

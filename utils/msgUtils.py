@@ -1,10 +1,10 @@
 import sys 
-sys.path.append("/home/mfl24/Documents/chaiProjects/trialControl/python/")
 import numpy as np
+import Globals 
+sys.path.append(Globals.HOME_PATH)
 import messageDefinitions as md
 from ctypes import *
 import Messenger as MR
-import Globals 
 import struct 
 import inspect 
 

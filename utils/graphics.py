@@ -1,5 +1,5 @@
 import sys 
-sys.path.append("/home/mfl24/Documents/chaiProjects/hapticEnvironment/python/")
+sys.path.append("/home/mfl24/Documents/chaiProjects/hapticEnvironment_TrialControl/")
 import numpy as np
 import messageDefinitions as md
 from ctypes import *

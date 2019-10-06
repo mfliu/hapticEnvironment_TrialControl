@@ -1,11 +1,11 @@
 import sys
-sys.path.append("/home/mfl24/Documents/chaiProjects/trialControl/")
 from statemachine import *
 from multiprocessing import Queue
 import json
+import Globals
+sys.path.append(Globals.HOME_PATH)
 import messageDefinitions as md
 import Messenger as MR
-import Globals
 from Logger import Logger
 import multiprocessing as mp
 import ctypes
