@@ -1,0 +1,57 @@
+{
+  "name": "cst",
+  "states": ["start", "running"],
+  "startState": "start", 
+  "save_params":{"hapticData.data":["HAPTIC_DATA_STREAM"], 
+      "cstData.data":["CST_DATA"],
+      "msgLog.log":["CST_START", "CST_STOP", "CST_CREATE", 
+        "CST_SET_LAMBDA", "CST_SET_VISUAL", "CST_SET_HAPTIC",
+        "TRIAL_START", "TRIAL_END"]
+    },
+  "setup_msg":[{
+    "CST_CREATE":{
+      "cstName":"cst", 
+      "lambdaVal":1.0, 
+      "forceMagnitude":1.0, 
+      "visionEnabled": 1, 
+      "hapticEnabled":1
+    }
+  }],
+  "end_msg": [{
+    "CST_DESTRUCT":{
+      "cstName":"cst"
+    }
+  }],
+  "start": {
+    "type": "ReachHoldState",
+    "transitions": {"success":["running"], "fail":["running"]},
+    "holdLength": 1.0,
+    "timeLimit": 2.0,
+    "targetObjectName": "center",
+    "graphics": {
+      "center":{
+        "shape": "box",
+        "color": [0.83, 0.83, 0.83, 1.0],
+        "size": [0, 50, 50],
+        "position": [-200, 0.0, 0.0]
+        }
+    },
+    "haptics":{}
+  },
+  "running":{
+    "type": "CSTRunningState",
+    "transitions":{"next":["start"]},
+    "graphics":{},
+    "haptics": {}
+  },
+  "taskVars": 
+  {
+    "trialNum": 0,
+    "lambda": 1.0,
+    "running": 0,     
+    "trialSucceeded": 0,
+    "total_success": [],
+    "updateState": "running",
+    "GUITree": ["trialNum", "lambda", "trialSucceeded", "proportionSuccess"] 
+  }
+}

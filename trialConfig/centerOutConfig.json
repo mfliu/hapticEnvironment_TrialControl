@@ -1,0 +1,81 @@
+{
+  "name": "centerOut",
+  "states": ["center", "rightTarget", "leftTarget", "rightPunishment", "leftPunishment"],
+  "startState": "center", 
+  "taskVars": {},
+  "center":
+  {
+    "type": "ReachHoldState",
+    "transitions": {"success": ["rightTarget", "leftTarget"], "failure":["rightPunishment", "leftPunishment"]},
+    "graphics": [ 
+      {
+        "shape": "circle",
+        "color": (0.0, 1.0, 0.0, 1.0),
+        "size": 1.0, 
+        "position": (0.0, 0.0, 0.0)
+      }
+    ]
+    "haptics":[{}]
+  },
+
+  "rightTarget":
+  {
+    "type": "ReachHoldState",
+    "transitions": {"success": ["center"], "failure":["rightPunishment", "leftPunishment"]},
+    "graphics":[
+      {
+        "shape": "circle",
+        "color": (0.0, 1.0, 0.0, 1.0),
+        "size": 1.0, 
+        "position": (0.0, 1.0, 0.0)
+      }
+    ],
+    "haptics":[{}]
+  },
+  
+  "leftTarget":
+  {
+    "type": "ReachHoldState",
+    "transitions": {"success":["center"], "failure":["rightPunishment", "leftPunishment"]},
+    "graphics": [
+      {
+        "shape": "circle",
+        "color": (0.0, 1.0, 0.0, 1.0),
+        "size": 1.0, 
+        "position": (0.0, -1.0, 0.0)
+      },
+    ]
+    "haptics":[{}]
+  },
+  
+  "rightPunishment":
+  {
+    "type": "ReachState",
+    "transitions": {"success":["center"], "failure":["rightPunishment", "leftPunishment"]},
+    "graphics": [
+      {
+        "shape": "circle",
+        "color": (1.0, 0.0, 0.0, 1.0),
+        "size": 1.0, 
+        "position": (0.0, 1.0, 0.0)
+      },
+    ]
+    "haptics": [{}]
+  },
+  
+  "leftPunishment":
+  {
+    "type": "ReachState",
+    "transitions": {"success":["center"], "failure":["rightPunishment", "leftPunishment"]},
+    "graphics": [
+      {
+        "shape": "circle",
+        "color": (1.0, 0.0, 0.0, 1.0),
+        "size": 1.0, 
+        "position": (0.0, -1.0, 0.0)
+      },
+    ]
+    "haptics": [{}]
+  },
+
+}
