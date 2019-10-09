@@ -30,6 +30,8 @@ from kivy.uix.colorpicker import ColorPicker
 import messageDefinitions as md 
 import State
 
+MSG_TYPES = [x[0][2:] for x in inspect.getmembers(md) if x[0].find("M_")==0]
+STATE_TYPES = [m[0] for m in inspect.getmembers(State, inspect.isclass) if m[0].find("State") > 0]
 class TrialBuilder(BoxLayout):
   def __init__(self, **kwargs):
     super(TrialBuilder, self).__init__(**kwargs)
@@ -49,19 +51,22 @@ class TrialBuilder(BoxLayout):
 class DisplayPane(BoxLayout):
   def __init__(self, **kwargs):
     super(DisplayPane, self).__init__(**kwargs)
-    self.size_hint_x = 0.4
+    self.size_hint_x = 0.6
 
 class ControlPane(TabbedPanel):
   def __init__(self, **kwargs):
     super(ControlPane, self).__init__(**kwargs)
+    self.tab_width=150
     self.trialTab = TrialTab()
     self.stateTab = StateTab()
     self.setupTab = SetupTab()
-    
+    self.taskVarTab = TaskVariableTab()
+
     self.add_widget(self.trialTab)
     self.add_widget(self.stateTab)
     self.add_widget(self.setupTab)
-    
+    self.add_widget(self.taskVarTab)
+
     self.default_tab = self.trialTab
 
 class TrialTab(TabbedPanelItem):
@@ -74,20 +79,25 @@ class TrialTab(TabbedPanelItem):
     self.add_widget(self.trialTab)
   
   def createTrialLayout(self):
-    self.trialPanel = BoxLayout(orientation='vertical') 
+    self.trialPanel = BoxLayout(orientation='vertical', padding=50, spacing=50) 
     self.trialName = TextInput(hint_text="Trial Name (e.g. CST)", multiline=False,\
-                               on_text_validate=self.setName, size_hint_y=0.2)
-    stateNameInfo = BoxLayout(orientation='horizontal', size_hint_y=0.2)
-    stateNameLabel = Label(text="Add states to trial:")
-    self.stateName = TextInput(hint_text="State Name (e.g. start)", multiline=False)
+                               on_text_validate=self.setName, size_hint_y=0.1, size_hint_x=0.5,\
+                               pos_hint = {'center_x':0.5, 'center_y':0.5}, padding=50)
+    stateNameInfo = BoxLayout(orientation='horizontal', size_hint_y=0.1)
+    stateNameLabel = Label(text="Add states to trial:", size_hint_y=0.1, pos_hint={'center_y':0.5})
+    self.stateName = TextInput(hint_text="State Name (e.g. start)", multiline=False,
+                               on_text_validate=self.setStateName)
     self.addStateButton = Button(text="Add State", on_release=self.addState)
     stateNameInfo.add_widget(stateNameLabel)
     stateNameInfo.add_widget(self.stateName)
     stateNameInfo.add_widget(self.addStateButton)
-
-    startStateSelection = BoxLayout(orientation="horizontal", size_hint_y=0.2)
+    self.addStateButton.disabled = True
+    
+    startStateSelection = BoxLayout(orientation="horizontal", size_hint_y=0.1, spacing=50,\
+                                    padding=50)
     selectStartLabel = Label(text="Select start state:")
     self.startStateName = Spinner(values=[])
+    self.startStateName.bind(text=self.setStartState)
     startStateSelection.add_widget(selectStartLabel)
     startStateSelection.add_widget(self.startStateName)
     
@@ -99,6 +109,12 @@ class TrialTab(TabbedPanelItem):
     app = App.get_running_app()
     app.root.sessionConfig["name"] = self.trialName.text
   
+  def setStateName(self, textObj):
+    if self.stateName.text != '':
+      self.addStateButton.disabled = False 
+    app = App.get_running_app()
+    app.root.sessionConfig[self.stateName.text] = {}
+  
   def addState(self, stateName):
     app = App.get_running_app()
     if "states" not in app.root.sessionConfig.keys():
@@ -108,6 +124,11 @@ class TrialTab(TabbedPanelItem):
     app.root.controlPane.stateTab.selectStateList.values.append(self.stateName.text)
     app.root.controlPane.stateTab.nextState.values.append(self.stateName.text)
     self.stateName.text = ''
+    self.addStateButton.disabled = True
+  
+  def setStartState(self, spinnerObj, startStateVal):
+    app = App.get_running_app()
+    app.root.sessionConfig["startState"] = startStateVal 
 
 class StateTab(TabbedPanelItem):
   def __init__(self, **kwargs):
@@ -139,9 +160,8 @@ class StateTab(TabbedPanelItem):
 
   def createStateTypePanel(self):
     self.stateTypePanel = BoxLayout(orientation="horizontal", size_hint_y=0.1)
-    stateTypes = [m[0] for m in inspect.getmembers(State, inspect.isclass) if m[0].find("State") > 0]
-    stateTypeLabel = Label(text="Select state type")
-    self.stateTypeSpinner = Spinner(values=stateTypes)# on_release=self.getStateTypeParams)
+    stateTypeLabel = Label(text="Select state type", padding=(20,20))
+    self.stateTypeSpinner = Spinner(values=STATE_TYPES)
     self.stateTypeSpinner.bind(text=self.getStateTypeParams)
     self.stateTypeParams = TreeView(hide_root=True)
     self.stateTypePanel.add_widget(stateTypeLabel)
@@ -228,27 +248,31 @@ class StateTab(TabbedPanelItem):
     self.hapticsPanel.add_widget(hapticType)
     self.hapticsPanel.add_widget(hapticParams)
   
-  def makeState(self):
-    stateName = self.selectStateList.value
-    stateType = self.stateTypeSpinner.value
-    self.stateDict["name"] = stateName
+  def makeState(self, buttonObj):
+    stateName = self.selectStateList.text
+    stateType = self.stateTypeSpinner.text
     self.stateDict["type"] = stateType 
-    
+    app = App.get_running_app()
+    app.root.sessionConfig[stateName] = self.stateDict 
+    self.stateDict = {}
+    print(app.root.sessionConfig)
+
   def addTransition(self, addTransitionButton):
     if "transitions" not in self.stateDict.keys():
       self.stateDict["transitions"] = {}
     if self.transitionSymbol not in self.stateDict["transitions"].keys():
-      self.stateDict["transitions"][self.transitionSymbol.text] = [self.stateTypeSpinner.text]
+      self.stateDict["transitions"][self.transitionSymbol.text] = [self.nextState.text]
     elif self.stateTypeSpinner.value not in self.stateDict["transitions"][self.transitionSymbol]:
-      self.stateDict["transitions"][self.transitionSymbol.text].append(self.stateTypeSpinner.text)
-  
+      self.stateDict["transitions"][self.transitionSymbol.text].append(self.nextState.text)
+
   def getStateTypeParams(self, spinnerObj, spinnerVal):
     stateType = spinnerVal
     if stateType == "ReachState":
-      statePopup =  MsgInfoPopup(fieldList=["timeLimit"], fieldTypes=["float"])
+      statePopup =  MsgInfoPopup(fieldList=["timeLimit"], fieldTypes=["float"], caller="stateType")
       statePopup.open()
     elif stateType == "ReachHoldState":
-      statePopup =  MsgInfoPopup(fieldList=["timeLimit", "holdLength"], fieldTypes=["float", "float"])
+      statePopup =  MsgInfoPopup(fieldList=["timeLimit", "holdLength"],\
+                                 fieldTypes=["float", "float"], caller="stateType")
       statePopup.open()
     elif stateType == "CSTRunningState":
       pass
@@ -269,14 +293,18 @@ class StateTab(TabbedPanelItem):
 class SetupTab(TabbedPanelItem):
   def __init__(self, **kwargs):
     super(SetupTab, self).__init__(**kwargs)
-    self.text = "Setup"
+    self.text = "Setup Info"
     self.setupTab = BoxLayout(orientation='vertical')
     self.createSavePanel()
     self.createSetupMsgPanel()
     self.makeSetupMsgPanel()
+    self.createBreakdownMsgPanel()
+    self.makeBreakdownMsgPanel()
     self.setupTab.add_widget(self.savePanel)
     self.setupTab.add_widget(self.setupMsgPanel)
-    self.setupTab.add_widget(self.makeMsgPanel)
+    self.setupTab.add_widget(self.makeSetupPanel)
+    self.setupTab.add_widget(self.breakdownMsgPanel)
+    self.setupTab.add_widget(self.makeBreakdownPanel)
     self.add_widget(self.setupTab)
     
   def createSavePanel(self):
@@ -284,7 +312,7 @@ class SetupTab(TabbedPanelItem):
     saveLabel = Label(text="Save parameters")
     saveLayout = BoxLayout(orientation='horizontal')
     self.fileName = TextInput(hint_text="File name (e.g. msgLog.log)", multiline=False)
-    self.saveMsg = Spinner(values=["Msg1", "Msg2", "Msg3"])
+    self.saveMsg = Spinner(values=MSG_TYPES)
     self.addMsgToFile = Button(text="Add message to file")
     saveLayout.add_widget(self.fileName)
     saveLayout.add_widget(self.saveMsg)
@@ -293,25 +321,109 @@ class SetupTab(TabbedPanelItem):
   
   def createSetupMsgPanel(self):
     self.setupMsgPanel = BoxLayout(orientation='vertical')
-    startMsgLabel = Label(text="Session Start Messages")
+    startMsgLabel = Label(text="Session Start Messages", size_hint_y=0.1)
     self.startUpMsgScroll = ScrollView(do_scroll_y=True, scroll_y=0,\
                                        scroll_type=['bars','content'],\
                                        bar_width=15, pos=[0,0])
     self.startMsgs = TreeView(hide_root=True)
+    self.startUpMsgScroll.add_widget(self.startMsgs)
     self.setupMsgPanel.add_widget(startMsgLabel)
     self.setupMsgPanel.add_widget(self.startUpMsgScroll)
-    self.setupMsgPanel.add_widget(self.startMsgs)
   
   def makeSetupMsgPanel(self):
-    self.makeMsgPanel = BoxLayout(orientation='horizontal')
+    self.makeSetupPanel = BoxLayout(orientation='horizontal')
     msgTypelabel = Label(text="Choose message type:")
-    self.msgTypeSpinner = Spinner(values=["msg1", "msg2", "msg3"])
-    msgLayout = BoxLayout(orientation='vertical')
-    msgInfoLabel = Label(text="Enter message information")
-    self.makeMsgPanel.add_widget(msgInfoLabel)
-    self.makeMsgPanel.add_widget(msgTypelabel)
-    self.makeMsgPanel.add_widget(self.msgTypeSpinner)
-    self.makeMsgPanel.add_widget(msgLayout)
+    msgTypes = inspect.getmembers(md)
+    self.startupMsgTypeSpinner = Spinner(values=MSG_TYPES)
+    self.startupMsgTypeSpinner.bind(text=self.makeSetupMessage)
+    self.makeSetupPanel.add_widget(msgTypelabel)
+    self.makeSetupPanel.add_widget(self.startupMsgTypeSpinner)
+  
+  def makeSetupMessage(self, spinnerObj, spinnerVal):
+    app = App.get_running_app()
+    msgType = getattr(md, spinnerVal)
+    msgStruct = getattr(md, "M_"+spinnerVal)
+    if "setup_msg" not in app.root.sessionConfig.keys():
+      app.root.sessionConfig["setup_msg"] = []
+    msgFields = [f[0] for f in msgStruct.__dict__['_fields_'] if f[0] != "header"]
+    msgFieldTypes = [str(f[1]).split(".")[-1].split("'")[0] for f in getattr(md, "M_CST_CREATE").__dict__['_fields_'] if f[0] != "header"]
+    msgFieldTypes = [None if x.find("char_Array") > 0 else "float" if x.split("_")[-1] == 'double'\
+                     else x.split("_")[-1] for x in msgFieldTypes]
+    msgPopup = MsgInfoPopup(fieldList = msgFields, fieldTypes=msgFieldTypes, caller="setup_msg",\
+                            msgName=spinnerVal)
+    msgPopup.open()
+  
+  def createBreakdownMsgPanel(self):
+    self.breakdownMsgPanel = BoxLayout(orientation='vertical')
+    endMsgLabel = Label(text="Session End Messages", size_hint_y=0.1)
+    self.breakdownMsgScroll = ScrollView(do_scroll_y=True, scroll_y=0,\
+                                       scroll_type=['bars','content'],\
+                                       bar_width=15, pos=[0,0])
+    self.endMsgs = TreeView(hide_root=True)
+    self.breakdownMsgScroll.add_widget(self.endMsgs)
+    self.breakdownMsgPanel.add_widget(endMsgLabel)
+    self.breakdownMsgPanel.add_widget(self.breakdownMsgScroll)
+  
+  def makeBreakdownMsgPanel(self):
+    self.makeBreakdownPanel = BoxLayout(orientation='horizontal')
+    msgTypelabel = Label(text="Choose message type:")
+    msgTypes = inspect.getmembers(md)
+    self.breakdownMsgTypeSpinner = Spinner(values=MSG_TYPES)
+    self.breakdownMsgTypeSpinner.bind(text=self.makeBreakdownMessage)
+    self.makeBreakdownPanel.add_widget(msgTypelabel)
+    self.makeBreakdownPanel.add_widget(self.breakdownMsgTypeSpinner)
+  
+  def makeBreakdownMessage(self, spinnerObj, spinnerVal):
+    app = App.get_running_app()
+    msgType = getattr(md, spinnerVal)
+    msgStruct = getattr(md, "M_"+spinnerVal)
+    if "end_msg" not in app.root.sessionConfig.keys():
+      app.root.sessionConfig["end_msg"] = []
+    msgFields = [f[0] for f in msgStruct.__dict__['_fields_'] if f[0] != "header"]
+    msgFieldTypes = [str(f[1]).split(".")[-1].split("'")[0] for f in msgStruct.__dict__['_fields_'] if f[0] != "header"]
+    msgFieldTypes = [None if x.find("char_Array") > 0 else "float" if x.split("_")[-1] == 'double'\
+                     else x.split("_")[-1] for x in msgFieldTypes]
+    msgPopup = MsgInfoPopup(fieldList = msgFields, fieldTypes=msgFieldTypes, caller="end_msg",\
+                            msgName=spinnerVal)
+    msgPopup.open()
+
+class TaskVariableTab(TabbedPanelItem):
+  def __init__(self, **kwargs):
+    super(TaskVariableTab, self).__init__(**kwargs)
+    self.text = "Task Variables"
+    self.taskVarsTab = BoxLayout(orientation='vertical')
+    self.createTaskVarsPanel()
+    self.add_widget(self.taskVarsPanel)
+
+  def createTaskVarsPanel(self):
+    self.taskVarsPanel = BoxLayout(orientation='vertical')
+    self.taskVarsScroll = ScrollView(do_scroll_y=True, scroll_y=0,\
+                                       scroll_type=['bars','content'],\
+                                       bar_width=15, pos=[0,0])
+    self.taskVarsTreeView = TreeView(hide_root=True)
+    self.taskVarsScroll.add_widget(self.taskVarsTreeView)
+    addTaskVarButton = Button(text="Add Task Variable", on_release=self.getTaskVarInfo)
+    self.taskVarsPanel.add_widget(self.taskVarsScroll)
+    self.taskVarsPanel.add_widget(addTaskVarButton)
+
+  def getTaskVarInfo(self, button):
+    self.taskVarPopup = Popup(title="Task Variable Information:")
+    taskVarLayout = BoxLayout(orientation='vertical')
+    self.taskVarName = TextInput(hint_text="Task Variable Name", multiline=False)
+    self.taskVarValue = TextInput(hint_text="Task Variable Starting Value", multiline=False)
+    taskVarAdd = Button(text="Add", on_release=self.addTaskVar)
+    taskVarLayout.add_widget(self.taskVarName)
+    taskVarLayout.add_widget(self.taskVarValue)
+    taskVarLayout.add_widget(taskVarAdd)
+    self.taskVarPopup.add_widget(taskVarLayout)
+    self.taskVarPopup.open()
+
+  def addTaskVar(self, button):
+    app = App.get_running_app()
+    if "taskVars" not in app.root.sessionConfig.keys():
+      app.root.sessionConfig["taskVars"] = {}
+    app.root.sessionConfig["taskVars"][self.taskVarName.text] = self.taskVarValue.text
+    self.taskVarPopup.dismiss()
 
 ## Accessory classes
 class MsgInfoPopup(Popup):
@@ -319,7 +431,10 @@ class MsgInfoPopup(Popup):
     myLayout = BoxLayout(orientation='vertical')
     self.fieldList = kwargs.pop('fieldList')
     fieldTypes= kwargs.pop('fieldTypes')
+    self.caller = kwargs.pop('caller')
     self.textInputs = [] 
+    if self.caller == "setup_msg" or self.caller == "end_msg":
+      self.msgName = kwargs.pop('msgName')
     for fIdx in range(0, len(self.fieldList)):
       f = self.fieldList[fIdx]
       fieldLabel = Label(text=f)
@@ -332,21 +447,37 @@ class MsgInfoPopup(Popup):
     myLayout.add_widget(enterParamsButton)
     self.add_widget(myLayout)
     self.title = "Enter Information"
+  
   def saveParams(self, button):
     app = App.get_running_app()
-    it = app.root.controlPane.stateTab.stateTypeParams.iterate_all_nodes()
-    try:
-      while True:
-        node = it.__next__()
-        app.root.controlPane.stateTab.stateTypeParams.remove_node(node)
-    except StopIteration:
-      pass
-    for fIdx in range(0, len(self.fieldList)):
-      fieldName = self.fieldList[fIdx]
-      fieldValue = self.textInputs[fIdx].text
-      app.root.controlPane.stateTab.stateDict[fieldName] = fieldValue
-      app.root.controlPane.stateTab.stateTypeParams.add_node(\
+    if self.caller == "stateType":
+      it = app.root.controlPane.stateTab.stateTypeParams.iterate_all_nodes()
+      try:
+        while True:
+          node = it.__next__()
+          app.root.controlPane.stateTab.stateTypeParams.remove_node(node)
+      except StopIteration:
+        pass
+      for fIdx in range(0, len(self.fieldList)):
+        fieldName = self.fieldList[fIdx]
+        fieldValue = self.textInputs[fIdx].text
+        app.root.controlPane.stateTab.stateDict[fieldName] = fieldValue
+        app.root.controlPane.stateTab.stateTypeParams.add_node(\
                             TreeViewLabel(text=fieldName + ": " + str(fieldValue)))
+    elif self.caller == "setup_msg":
+      msgDict = {self.msgName:{}} 
+      for fIdx in range(0, len(self.fieldList)):
+        fieldName = self.fieldList[fIdx]
+        fieldValue = self.textInputs[fIdx].text 
+        msgDict[self.msgName][fieldName] = fieldValue
+      app.root.sessionConfig["setup_msg"].append(msgDict)
+    elif self.caller == "end_msg":
+      msgDict = {self.msgName:{}} 
+      for fIdx in range(0, len(self.fieldList)):
+        fieldName = self.fieldList[fIdx]
+        fieldValue = self.textInputs[fIdx].text 
+        msgDict[self.msgName][fieldName] = fieldValue
+      app.root.sessionConfig["end_msg"].append(msgDict)
     self.dismiss()
 
 class TrialBuilderApp(App):
