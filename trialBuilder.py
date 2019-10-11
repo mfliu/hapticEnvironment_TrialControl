@@ -61,11 +61,13 @@ class ControlPane(TabbedPanel):
     self.stateTab = StateTab()
     self.setupTab = SetupTab()
     self.taskVarTab = TaskVariableTab()
+    self.doneTab = DoneTab()
 
     self.add_widget(self.trialTab)
     self.add_widget(self.stateTab)
     self.add_widget(self.setupTab)
     self.add_widget(self.taskVarTab)
+    self.add_widget(self.doneTab)
 
     self.default_tab = self.trialTab
 
@@ -232,8 +234,8 @@ class StateTab(TabbedPanelItem):
 
     hapticType = BoxLayout(orientation='horizontal', size_hint_y=0.1)
     hapticTypeLabel = Label(text="Effect Type:")
-    self.hapticTypeSpinner = Spinner(values=["stiffness", "bounding plane", "constant force field",\
-                                             "viscosity", "freeze"])
+    self.hapticTypeSpinner = Spinner(values=["HAPTICS_SET_STIFFNESS", "HAPTICS_CONSTANT_FORCE_FIELD",\
+                                             "HAPTICS_VISCOSITY_FIELD"])
     self.hapticTypeSpinner.bind(text=self.getHapticParameters)
     hapticType.add_widget(hapticTypeLabel)
     hapticType.add_widget(self.hapticTypeSpinner)
@@ -288,7 +290,22 @@ class StateTab(TabbedPanelItem):
     self.stateDict["graphics"][self.graphicsName.text] = objectDict 
   
   def getHapticParameters(self, spinnerObj, spinnerVal):
-    print(spinnerVal)
+    if "haptics" not in self.stateDict.keys():
+      self.stateDict["haptics"] = {}
+    app = App.get_running_app()
+    msgType = getattr(md, spinnerVal)
+    msgStruct = getattr(md, "M_"+spinnerVal)
+    msgFields = [f[0] for f in msgStruct.__dict__['_fields_'] if f[0] != "header"]
+    msgFieldTypes = [str(f[1]).split(".")[-1].split("'")[0] for f in getattr(md, "M_" + spinnerVal).__dict__['_fields_'] if f[0] != "header"]
+    msgFieldTypes = [None if x.find("Array") > 0 else "float" if x.split("_")[-1] == 'double'\
+                     else x.split("_")[-1] for x in msgFieldTypes]
+    nameIdx = msgFields.index("effectName")
+    if nameIdx >= 0:
+      del msgFields[nameIdx]
+      del msgFieldTypes[nameIdx]
+    msgPopup = MsgInfoPopup(fieldList = msgFields, fieldTypes=msgFieldTypes, caller="haptic_msg",\
+                            msgName=self.hapticEffectName.text)
+    msgPopup.open()
 
 class SetupTab(TabbedPanelItem):
   def __init__(self, **kwargs):
@@ -313,9 +330,10 @@ class SetupTab(TabbedPanelItem):
     saveLayout = BoxLayout(orientation='horizontal')
     self.fileName = TextInput(hint_text="File name (e.g. msgLog.log)", multiline=False)
     self.saveMsg = Spinner(values=MSG_TYPES)
-    self.addMsgToFile = Button(text="Add message to file")
+    self.addMsgToFile = Button(text="Add message to file", on_release=self.addSaveMsg)
     saveLayout.add_widget(self.fileName)
     saveLayout.add_widget(self.saveMsg)
+    saveLayout.add_widget(self.addMsgToFile)
     self.savePanel.add_widget(saveLabel)
     self.savePanel.add_widget(saveLayout)
   
@@ -387,6 +405,15 @@ class SetupTab(TabbedPanelItem):
                             msgName=spinnerVal)
     msgPopup.open()
 
+  def addSaveMsg(self, buttonObj):
+    app = App.get_running_app()
+    if "save_params" not in app.root.sessionConfig.keys():
+      app.root.sessionConfig["save_params"] = {self.fileName.text:[]}
+    if self.fileName.text not in app.root.sessionConfig["save_params"].keys():
+      app.root.sessionConfig["save_params"][self.fileName.text] = []
+    app.root.sessionConfig["save_params"][self.fileName.text].append(self.saveMsg.text)
+
+
 class TaskVariableTab(TabbedPanelItem):
   def __init__(self, **kwargs):
     super(TaskVariableTab, self).__init__(**kwargs)
@@ -425,6 +452,18 @@ class TaskVariableTab(TabbedPanelItem):
     app.root.sessionConfig["taskVars"][self.taskVarName.text] = self.taskVarValue.text
     self.taskVarPopup.dismiss()
 
+class DoneTab(TabbedPanelItem):
+  def __init__(self, **kwargs):
+    super(DoneTab, self).__init__(**kwargs)
+    self.text = "Save Config"
+    doneButton = Button(text="Done", on_release=self.saveConfig)
+    self.add_widget(doneButton)
+
+  def saveConfig(self, button):
+    app = App.get_running_app()
+    trialName = app.root.sessionConfig["name"]
+    json.dump(app.root.sessionConfig, Globals.HOME_PATH + "trialConfig/" + trialName +"Config.json")
+
 ## Accessory classes
 class MsgInfoPopup(Popup):
   def __init__(self, **kwargs):
@@ -433,7 +472,7 @@ class MsgInfoPopup(Popup):
     fieldTypes= kwargs.pop('fieldTypes')
     self.caller = kwargs.pop('caller')
     self.textInputs = [] 
-    if self.caller == "setup_msg" or self.caller == "end_msg":
+    if self.caller == "setup_msg" or self.caller == "end_msg" or self.caller == "haptic_msg":
       self.msgName = kwargs.pop('msgName')
     for fIdx in range(0, len(self.fieldList)):
       f = self.fieldList[fIdx]
@@ -478,6 +517,14 @@ class MsgInfoPopup(Popup):
         fieldValue = self.textInputs[fIdx].text 
         msgDict[self.msgName][fieldName] = fieldValue
       app.root.sessionConfig["end_msg"].append(msgDict)
+    elif self.caller == "haptic_msg":
+      app = App.get_running_app()
+      for fIdx in range(0, len(self.fieldList)):
+        fieldName = self.fieldList[fIdx]
+        fieldValue = self.textInputs[fIdx].text 
+        if self.msgName not in app.root.controlPane.stateTab.stateDict["haptics"]:
+          app.root.controlPane.stateTab.stateDict["haptics"][self.msgName] = {}
+        app.root.controlPane.stateTab.stateDict["haptics"][self.msgName][fieldName] = fieldValue   
     self.dismiss()
 
 class TrialBuilderApp(App):
