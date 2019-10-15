@@ -112,8 +112,9 @@ class TaskControl(BoxLayout):
     for fileName in saveParams.keys():
       saveConfig[fileName] = [getattr(md, x) for x in saveParams[fileName]]
     myLogger = Logger(Globals.LOGGER_IP, Globals.LOGGER_PORT, saveConfig)
-    loggingProcess = mp.Process(target=myLogger.startLogging)
+    loggingProcess = mp.Process(target=myLogger.listenerThread)
     loggingProcess.start()
+    time.sleep(0.5)
 
     sessionStart = md.M_SESSION_START()
     sessionStart.header.msg_type = c_int(md.SESSION_START)
