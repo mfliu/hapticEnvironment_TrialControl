@@ -7,6 +7,8 @@ import os
 from threading import Thread
 import time 
 import json 
+import pymongo
+import platform 
 
 class Logger:
   def __init__(self, SET_IPADDR, SET_PORT, saveInfo):
@@ -18,11 +20,12 @@ class Logger:
 
     self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    if platform.system() == "Linux":
+      self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
     self.socket.bind((self.IPADDR, self.PORT))
     self.running = True
     self.logging = False 
-    self.logThread = Thread(target = self.listenerThread)
+    self.logThread = Thread(target = self.loggerThread)
     self.logThread.daemon = True
     
     self.saveFilePrefix = saveInfo["saveFilePrefix"]
@@ -52,7 +55,7 @@ class Logger:
     self.running = True 
     self.logThread.start()
 
-  def listenerThread(self):
+  def loggerThread(self):
     self.running = True
     msgsReceived = 0
     while self.running == True:
@@ -76,6 +79,7 @@ class Logger:
           f.flush()
         msgsReceived = 0
       time.sleep(0.001)
+
 #if __name__ == "__main__":
 #  config = json.load(open("/home/mfl24/Documents/chaiProjects/hapticEnvironment_TrialControl/trialConfig/cstConfig.json"))
 #  saveConfig = config["save_params"]

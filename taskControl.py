@@ -29,6 +29,10 @@ from kivy.uix.label import Label
 from functools import partial
 from kivy.properties import BooleanProperty
 
+def loggerFunction(saveConfig):
+  myLogger = Logger(Globals.LOGGER_IP, Globals.LOGGER_PORT, saveConfig)
+  myLogger.startLogging()
+
 class TaskControl(BoxLayout):
   def __init__(self, **kwargs):
     super(TaskControl, self).__init__(**kwargs)
@@ -36,7 +40,7 @@ class TaskControl(BoxLayout):
     self.state = "running"
     self.sm = None 
     client = Globals.getClient()
-    client.call("addModule", 2, "127.0.0.1", 9000)
+    client.call("addModule", 2, Globals.IPADDR, Globals.PORT)
     client.call("subscribeTo", 2, 1)
     
     self.listenerThread = Thread(target=self.listener)
@@ -106,28 +110,41 @@ class TaskControl(BoxLayout):
     taskSM = StateMachine(self.sessionInfo["configFile"], saveFilePrefix)
     self.sm = taskSM
     self.sm.taskVars["taskControl"] = self
-
+    
     saveConfig = {"saveFilePrefix": saveFilePrefix}
     saveParams = self.sm.config["save_params"]
     for fileName in saveParams.keys():
       saveConfig[fileName] = [getattr(md, x) for x in saveParams[fileName]]
-    myLogger = Logger(Globals.LOGGER_IP, Globals.LOGGER_PORT, saveConfig)
-    loggingProcess = mp.Process(target=myLogger.listenerThread)
+    loggingProcess = mp.Process(target=loggerFunction)
     loggingProcess.start()
     time.sleep(0.5)
 
-    sessionStart = md.M_SESSION_START()
-    sessionStart.header.msg_type = c_int(md.SESSION_START)
-    packet = MR.makeMessage(sessionStart)
-    MR.sendMessage(packet)
+    shouldRecord = self.get_root_window().children[-1].ids["recordData"].active
+    if shouldRecord == True:
+      mocapRecord = self.get_root_window().children[-1].ids["mocapData"].active 
+      emgRecord = self.get_root_window().children[-1].ids["emgData"].active 
+      
+      sessionStart = md.M_SESSION_START()
+      sessionStart.header.msg_type = c_int(md.SESSION_START)
+      packet = MR.makeMessage(sessionStart)
+      MR.sendMessage(packet)
     
-    startRecording = md.M_START_RECORDING()
-    startRecording.header.msg_type = c_int(md.START_RECORDING)
-    fileName = create_string_buffer(str.encode(saveFilePrefix+"_trial.data"), md.MAX_STRING_LENGTH)
-    fileNamePtr = (c_char_p) (addressof(fileName))
-    startRecording.filename = fileNamePtr.value
-    packet = MR.makeMessage(startRecording)
-    MR.sendMessage(packet)
+      startRecording = md.M_START_RECORDING()
+      startRecording.header.msg_type = c_int(md.START_RECORDING)
+      fileName = create_string_buffer(str.encode(saveFilePrefix+"_trial.data"), md.MAX_STRING_LENGTH)
+      fileNamePtr = (c_char_p) (addressof(fileName))
+      startRecording.filename = fileNamePtr.value
+      packet = MR.makeMessage(startRecording)
+      MR.sendMessage(packet)
+      
+      if mocapRecord == True:
+        mocapClient, mocapSocket = Globals.getMocapClient()
+        mocapClient.sendCommand(2, "StartRecording", mocapSocket, Globals.MOCAP_IP,\
+                                Globals.MOCAP_PORT)
+      if emgRecord == True:
+        emgCommandSocket = Globals.getEMGCommand()
+        emgStreamSocket = Globals.getEMGStream()
+        emgCommandSocket.sendall(b'TRIGGER START\r\n\r\n')
 
     self.smThread = Thread(target=self.sm.run)
     self.smThread.daemon = True
@@ -136,16 +153,31 @@ class TaskControl(BoxLayout):
   def stopSM(self):
     self.sm.running = False
     self.state = "stopping"
-    stopRecording = md.M_STOP_RECORDING()
-    stopRecording.header.msg_type = c_int(md.STOP_RECORDING)
-    packet = MR.makeMessage(stopRecording)
-    MR.sendMessage(packet)
     
-    sessionStop = md.M_SESSION_END()
-    sessionStop.header.msg_type = c_int(md.SESSION_END)
-    packet = MR.makeMessage(sessionStop)
-    MR.sendMessage(packet)
+    shouldRecord = self.get_root_window().children[-1].ids["recordData"].active
+    if shouldRecord == True:
+      mocapRecord = self.get_root_window().children[-1].ids["mocapData"].active 
+      emgRecord = self.get_root_window().children[-1].ids["emgData"].active 
+      
+      stopRecording = md.M_STOP_RECORDING()
+      stopRecording.header.msg_type = c_int(md.STOP_RECORDING)
+      packet = MR.makeMessage(stopRecording)
+      MR.sendMessage(packet)
     
+      sessionStop = md.M_SESSION_END()
+      sessionStop.header.msg_type = c_int(md.SESSION_END)
+      packet = MR.makeMessage(sessionStop)
+      MR.sendMessage(packet)
+      
+      if mocapRecord == True:
+        mocapClient, mocapSocket = Globals.getMocapClient()
+        mocapClient.sendCommand(2, "StopRecording", mocapSocket, Globals.MOCAP_IP,\
+                                Globals.MOCAP_PORT)
+      if emgRecord == True:
+        emgCommandSocket = Globals.getEMGCommand()
+        emgStreamSocket = Globals.getEMGStream()
+        emgCommandSocket.sendall(b'TRIGGER STOP\r\n\r\n')
+
 
 class FilePopup(Popup):
   def __init__(self, **kwargs):
@@ -194,4 +226,7 @@ class TaskControlApp(App):
 
 
 if __name__ == "__main__":
-  TaskControlApp().run()
+  global saveParams
+  saveParams = mp.Queue()
+  taskControl = mp.Process(target=TaskControlApp().run)
+  taskControl.start() 

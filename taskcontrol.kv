@@ -87,7 +87,26 @@
 		size_hint_y: 0.8
         id: recordData
         active: False
-
+    BoxLayout:
+      orientation: 'horizontal'
+      GridLayout:
+        cols: 2
+        spacing: 10
+        padding: 10
+        Label:
+          text: "Mocap Data"
+        CheckBox:
+          id: mocapData
+          size_hint_x: 0.2 
+      GridLayout:
+        cols: 2
+        spacing: 10
+        padding: 10
+        Label:
+          text: "EMG Data"
+        CheckBox:
+          id: emgData
+          size_hint_x: 0.2
 	Button:
 	  text: "Start"
       on_release: taskControl.startSM()
