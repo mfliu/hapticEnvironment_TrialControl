@@ -115,7 +115,7 @@ class TaskControl(BoxLayout):
     saveParams = self.sm.config["save_params"]
     for fileName in saveParams.keys():
       saveConfig[fileName] = [getattr(md, x) for x in saveParams[fileName]]
-    loggingProcess = mp.Process(target=loggerFunction)
+    loggingProcess = mp.Process(target=loggerFunction, args=(saveConfig))
     loggingProcess.start()
     time.sleep(0.5)
 
@@ -226,7 +226,4 @@ class TaskControlApp(App):
 
 
 if __name__ == "__main__":
-  global saveParams
-  saveParams = mp.Queue()
-  taskControl = mp.Process(target=TaskControlApp().run)
-  taskControl.start() 
+  TaskControlApp().run()
