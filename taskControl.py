@@ -6,7 +6,7 @@ import Globals
 sys.path.append(Globals.HOME_PATH)
 import messageDefinitions as md
 import Messenger as MR
-from Logger import Logger
+from Logger import loggerFunction
 import multiprocessing as mp
 import ctypes
 from threading import Thread 
@@ -28,10 +28,6 @@ from kivy.uix.filechooser import FileChooserIconView
 from kivy.uix.label import Label
 from functools import partial
 from kivy.properties import BooleanProperty
-
-def loggerFunction(saveConfig):
-  myLogger = Logger(Globals.LOGGER_IP, Globals.LOGGER_PORT, saveConfig)
-  myLogger.startLogging()
 
 class TaskControl(BoxLayout):
   def __init__(self, **kwargs):

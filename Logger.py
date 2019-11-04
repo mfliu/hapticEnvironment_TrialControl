@@ -10,87 +10,56 @@ import json
 import platform 
 import sys 
 
-class Logger:
-  def __init__(self, SET_IPADDR, SET_PORT, saveInfo):
-    self.client = msgpackrpc.Client(msgpackrpc.Address(Globals.RPC_IP, Globals.RPC_PORT))
-    self.IPADDR = SET_IPADDR 
-    self.PORT = SET_PORT
-    self.client.call("addModule", 3, self.IPADDR, self.PORT)
-    self.client.call("subscribeTo", 3, 999)
+def loggerFunction(saveInfo):
+  client = Globals.getClient() 
+  client.call("addModule", 3, Globals.LOGGER_IP, Globals.LOGGER_PORT)
+  client.call("subscribeTo", 3, 999)
+  saveFilePrefix = saveInfo["saveFilePrefix"]
+  saveConfig = {}
+  filePtrs = []
+  for fileToSave in saveInfo.keys():
+    if fileToSave != "saveFilePrefix":
+      fullFilePath = saveFilePrefix + "_" + fileToSave
+      if not os.path.isfile(fullFilePath):
+        f = open(fullFilePath, 'ab')
+        for msgType in saveInfo[fileToSave]:
+          saveConfig[msgType] = f
+          filePtrs.append(f) 
 
-    self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    if platform.system() == "Linux":
-      self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-    self.socket.bind((self.IPADDR, self.PORT))
-    self.running = True
-    self.logging = False 
-    self.logThread = Thread(target = self.loggerThread)
-    self.logThread.daemon = True
-    self.saveFilePrefix = saveInfo["saveFilePrefix"]
-    self.saveConfig = {}
-    self.filePtrs = []
-    for fileToSave in saveInfo.keys():
-      if fileToSave != "saveFilePrefix":
-        fullFilePath = self.saveFilePrefix + "_" + fileToSave
-        if not os.path.isfile(fullFilePath):
-          f = open(fullFilePath, 'ab')
-          for msgType in saveInfo[fileToSave]:
-            self.saveConfig[msgType] = f
-            self.filePtrs.append(f) 
 
-  def addMsgSave(self, msgType, filePath):
-    fullFilePath = self.saveFilePrefix + "_" + filePath
-    for f in self.filePtrs:
-      if f.name == fullFilePath:
-        self.saveConfig[msgType] = f
-        return 
-    f = open(fullFilePath, 'ab')
-    self.filePtrs.append(f)
-    self.saveConfig[msgType] = f
-    return 
+  running = True
+  logging = False
+  msgsReceived = 0
+  while running == True:
+    data, addr = Globals.getLoggerSocket().recvfrom(md.MAX_PACKET_LENGTH)
+    header = md.MSG_HEADER()
+    MR.readMessage(data, header)
+    if header.msg_type == md.START_RECORDING:
+      print("Starting Recording")
+      logging = True
+    elif header.msg_type == md.STOP_RECORDING:
+      logging = False
+      running = False
+      print("Stopping Recording")
+    elif header.msg_type == md.PAUSE_RECORDING:
+      logging = False
+    elif header.msg_type == md.RESUME_RECORDING:
+      logging = True 
     
-  def startLogging(self):
-    self.running = True 
-    self.logThread.start()
-
-  def loggerThread(self):
-    self.running = True
-    msgsReceived = 0
-    while self.running == True:
-      print("Is the recvfrom blocking?")
-      data, addr = self.socket.recvfrom(md.MAX_PACKET_LENGTH)
-      print("The recvfrom isn't blocking yet")
-      header = md.MSG_HEADER()
-      MR.readMessage(data, header)
-      print(self.running, header.msg_type)
-      if header.msg_type == md.START_RECORDING:
-        self.logging = True
-      elif header.msg_type == md.STOP_RECORDING:
-        self.logging = False
-        self.running = False
-      elif header.msg_type == md.PAUSE_RECORDING:
-        self.logging = False
-      elif header.msg_type == md.RESUME_RECORDING:
-        self.logging = True 
-      
-      if self.logging == True and header.msg_type in self.saveConfig.keys():
-        filePtr = self.saveConfig[header.msg_type]
-        filePtr.write(data)
-        msgsReceived = msgsReceived + 1
-        print("I'm loggin' shit, yo")
-      print("Whatwhatwhat")
-      if msgsReceived > 100:
-        for f in self.filePtrs:
-          f.flush()
-        msgsReceived = 0
-      time.sleep(0.01)
-    print("I exited the logger function for some reason")
-    for f in self.filePtrs:
-      for f in self.filePtrs:
-          f.flush()
-      f.close()
-
+    if logging == True and header.msg_type in saveConfig.keys():
+      filePtr = saveConfig[header.msg_type]
+      filePtr.write(data)
+      msgsReceived = msgsReceived + 1
+    if msgsReceived > 100:
+      for f in filePtrs:
+        f.flush()
+      msgsReceived = 0
+    time.sleep(0.0001)
+  for f in filePtrs:
+    for f in filePtrs:
+      if f.closed == False:
+        f.flush()
+        f.close()
 
 #if __name__ == "__main__":
 #  config = json.load(open("/home/mfl24/Documents/chaiProjects/hapticEnvironment_TrialControl/trialConfig/cstConfig.json"))

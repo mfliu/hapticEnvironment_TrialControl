@@ -49,6 +49,17 @@ def getListenerSocket():
     listenerSocket.bind((IPADDR, PORT))
   return listenerSocket 
 
+loggerSocket = None
+def getLoggerSocket():
+  global loggerSocket 
+  if loggerSocket == None:
+    loggerSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    loggerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    if platform.system() == "Linux":
+      loggerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    loggerSocket.bind((LOGGER_IP, LOGGER_PORT))
+  return loggerSocket
+
 mocapClient = None
 mocapSocket = None
 def getMocapClient():
