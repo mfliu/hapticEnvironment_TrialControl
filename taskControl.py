@@ -60,6 +60,7 @@ class TaskControl(BoxLayout):
   def initializeTreeView(self):
     self.tv = self.get_root_window().children[-1].ids["experimentRecords"]
     self.tv.bind(minimum_height=self.tv.setter('height'))
+    self.treeviewInitialized = True
 
   def addNode(self):
     trialNum = self.sm.taskVars["trialNum"]
@@ -95,7 +96,7 @@ class TaskControl(BoxLayout):
       data, addr = Globals.getListenerSocket().recvfrom(md.MAX_PACKET_LENGTH)
       header = md.MSG_HEADER()
       MR.readMessage(data, header)
-      if header.msg_type == md.CST_DATA:
+      if header.msg_type == md.CST_DATA and self.sm.paused == False:
         cstData = md.M_CST_DATA()
         MR.readMessage(data, cstData)
         if np.abs(cstData.cursorY) > 120 and self.sm.taskVars["running"] == 1:
@@ -104,7 +105,13 @@ class TaskControl(BoxLayout):
 
   def startSM(self):
     self.initializeTreeView()
+    if "saveDir" not in self.sessionInfo.keys():
+      self.sessionInfo["saveDir"] = self.get_root_window().children[-1].ids["saveDirText"].text
+    if "subjectName" not in self.sessionInfo.keys():
+      self.sessionInfo["subjectName"] = self.get_root_window().children[-1].ids["subjectName"].text
+
     saveFilePrefix = os.path.join(self.sessionInfo["saveDir"], self.sessionInfo["subjectName"] + "-" +\
+                                  self.sessionInfo["taskName"] + "_" +\
                                   time.ctime(time.time()).replace(" ", "_").replace(":", "-"))
     
     taskSM = StateMachine(self.sessionInfo["configFile"], saveFilePrefix)
@@ -115,20 +122,15 @@ class TaskControl(BoxLayout):
     saveParams = self.sm.config["save_params"]
     for fileName in saveParams.keys():
       saveConfig[fileName] = [getattr(md, x) for x in saveParams[fileName]]
-    loggingProcess = mp.Process(target=loggerFunction, args=(saveConfig))
-    loggingProcess.start()
-    time.sleep(0.5)
+    self.loggingProcess = mp.Process(target=loggerFunction, args=(saveConfig,))
+    self.loggingProcess.start()
+    time.sleep(1)
 
     shouldRecord = self.get_root_window().children[-1].ids["recordData"].active
     if shouldRecord == True:
       mocapRecord = self.get_root_window().children[-1].ids["mocapData"].active 
       emgRecord = self.get_root_window().children[-1].ids["emgData"].active 
       
-      sessionStart = md.M_SESSION_START()
-      sessionStart.header.msg_type = c_int(md.SESSION_START)
-      packet = MR.makeMessage(sessionStart)
-      MR.sendMessage(packet)
-    
       startRecording = md.M_START_RECORDING()
       startRecording.header.msg_type = c_int(md.START_RECORDING)
       fileName = create_string_buffer(str.encode(saveFilePrefix+"_trial.data"), md.MAX_STRING_LENGTH)
@@ -145,15 +147,36 @@ class TaskControl(BoxLayout):
         emgCommandSocket = Globals.getEMGCommand()
         emgStreamSocket = Globals.getEMGStream()
         emgCommandSocket.sendall(b'TRIGGER START\r\n\r\n')
-
+    
+    self.get_root_window().children[-1].ids["pauseButton"].disabled = False
     self.smThread = Thread(target=self.sm.run)
     self.smThread.daemon = True
     self.smThread.start()
-  
+    self.get_root_window().children[-1].ids["startButton"].disabled = True
+    self.get_root_window().children[-1].ids["stopButton"].disabled = False 
+
+  def pauseResumeSM(self):
+    pauseButton = self.get_root_window().children[-1].ids["pauseButton"]
+    if self.sm.paused == False and pauseButton.text == "Pause":
+      pauseRecording = md.M_PAUSE_RECORDING()
+      pauseRecording.header.msg_type = c_int(md.PAUSE_RECORDING)
+      packet = MR.makeMessage(pauseRecording)
+      MR.sendMessage(packet)
+      self.sm.paused = True 
+      pauseButton.text = "Resume"
+    elif self.sm.paused == True and pauseButton.text == "Resume":
+      resumeRecording = md.M_RESUME_RECORDING()
+      resumeRecording.header.msg_type = c_int(md.RESUME_RECORDING)
+      packet = MR.makeMessage(resumeRecording)
+      MR.sendMessage(packet)
+      self.sm.paused = False
+      pauseButton.text = "Pause"
+
   def stopSM(self):
     self.sm.running = False
-    self.state = "stopping"
-    
+    while self.sm.stopped != True:
+      time.sleep(0.5)
+     
     shouldRecord = self.get_root_window().children[-1].ids["recordData"].active
     if shouldRecord == True:
       mocapRecord = self.get_root_window().children[-1].ids["mocapData"].active 
@@ -163,12 +186,7 @@ class TaskControl(BoxLayout):
       stopRecording.header.msg_type = c_int(md.STOP_RECORDING)
       packet = MR.makeMessage(stopRecording)
       MR.sendMessage(packet)
-    
-      sessionStop = md.M_SESSION_END()
-      sessionStop.header.msg_type = c_int(md.SESSION_END)
-      packet = MR.makeMessage(sessionStop)
-      MR.sendMessage(packet)
-      
+      time.sleep(0.5)
       if mocapRecord == True:
         mocapClient, mocapSocket = Globals.getMocapClient()
         mocapClient.sendCommand(2, "StopRecording", mocapSocket, Globals.MOCAP_IP,\
@@ -177,8 +195,15 @@ class TaskControl(BoxLayout):
         emgCommandSocket = Globals.getEMGCommand()
         emgStreamSocket = Globals.getEMGStream()
         emgCommandSocket.sendall(b'TRIGGER STOP\r\n\r\n')
-
-
+    self.loggingProcess.join()
+    self.sessionInfo = {}
+    resetWorld = md.M_RESET_WORLD()
+    resetWorld.header.msg_type = md.RESET_WORLD
+    packet = MR.makeMessage(resetWorld)
+    MR.sendMessage(packet)
+    self.get_root_window().children[-1].ids["startButton"].disabled = False
+    self.get_root_window().children[-1].ids["stopButton"].disabled = True 
+    
 class FilePopup(Popup):
   def __init__(self, **kwargs):
     super(FilePopup, self).__init__()
@@ -209,6 +234,7 @@ class FilePopup(Popup):
   def chooseFile(self, obj):
     self.get_root_window().children[-1].sessionInfo[self.choice] = self.selectedFolder
     if self.choice == "configFile":
+      self.sessionInfo = {}
       self.get_root_window().children[-1].ids["configFileText"].text = self.selectedFolder
       configData = json.load(open(self.selectedFolder))
       self.get_root_window().children[-1].ids["taskName"].text = configData["name"] 
@@ -223,6 +249,19 @@ class TaskControlApp(App):
 
   def build(self,):
     return TaskControl()
+  
+  def on_start(self):
+    sessionStart = md.M_SESSION_START()
+    sessionStart.header.msg_type = c_int(md.SESSION_START)
+    packet = MR.makeMessage(sessionStart)
+    MR.sendMessage(packet)
+  
+  def on_stop(self):
+    sessionStop = md.M_SESSION_END()
+    sessionStop.header.msg_type = c_int(md.SESSION_END)
+    packet = MR.makeMessage(sessionStop)
+    MR.sendMessage(packet)
+    self.state = "stopping"
 
 
 if __name__ == "__main__":

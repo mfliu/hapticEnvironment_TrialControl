@@ -47,6 +47,8 @@ class ReachState(State):
     while (time.time() - startTime) < timeLimit:
       if haptics.collidingWith(self.name) == True:
         self.disableStateObjs
+        if sm.taskVars["updateState"] == name:
+          sm.taskVars["taskControl"].addNode()
         return "success"
     graphics.changeColor(self.name, 1.0, 0.0,0.0, 1.0)
     self.disableStateObjs()
@@ -119,6 +121,7 @@ class CSTRunningState(State):
 
   def entry(self, name, sm):
     graphics.changeColor("center", 0.83, 0.83, 0.83, 1.0)
+
     sm.taskVars["trialNum"] = sm.taskVars["trialNum"] + 1   
     sm.taskVars["running"] = 1
     sm.taskVars["trialSucceeded"] = 1
@@ -146,3 +149,7 @@ class CSTRunningState(State):
       sm.taskVars["taskControl"].addNode()
     time.sleep(0.1)
     return "next"
+
+class DecisionState(State):
+  def __init__(self, name, transitions, graphicObjs, hapticObjs):
+    super(DecisionState, self).__init__(name, transitions, graphicObjs, hapticObjs)

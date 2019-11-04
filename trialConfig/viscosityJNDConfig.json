@@ -1,36 +1,24 @@
 {
-  "name": "cst",
-  "states": ["start", "running"],
+  "name": "viscosityJND",
+  "states": ["start", "field1", "field2", "decision"],
   "startState": "start", 
   "save_params":{"hapticData.data":["HAPTIC_DATA_STREAM"], 
-      "cstData.data":["CST_DATA"],
-      "msgLog.log":["CST_START", "CST_STOP", "CST_CREATE", 
-        "CST_SET_LAMBDA", "CST_SET_VISUAL", "CST_SET_HAPTIC",
-        "TRIAL_START", "TRIAL_END"]
+      "msgLog.log":["TRIAL_START", "TRIAL_END"]
     },
-  "setup_msg":[
-    {
-      "CST_CREATE":{
-        "cstName":"cst", 
-        "lambdaVal":1.0, 
-        "forceMagnitude":1.0, 
-        "visionEnabled": 1, 
-        "hapticEnabled":1
-      }
+  "setup_msg":[{
+    "CST_CREATE":{
+      "cstName":"cst", 
+      "lambdaVal":1.0, 
+      "forceMagnitude":1.0, 
+      "visionEnabled": 1, 
+      "hapticEnabled":1
     }
-  ],
-  "end_msg": [
-    {
-      "CST_DESTRUCT":{
-        "cstName":"cst"
-      }
-    },
-    {
-      "REMOVE_OBJECT":{
-        "objectName": "center"
-      }
+  }],
+  "end_msg": [{
+    "CST_DESTRUCT":{
+      "cstName":"cst"
     }
-  ],
+  }],
   "start": {
     "type": "ReachHoldState",
     "transitions": {"success":["running"], "fail":["running"]},

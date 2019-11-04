@@ -8,6 +8,7 @@ from threading import Thread
 import time 
 import json 
 import platform 
+import sys 
 
 class Logger:
   def __init__(self, SET_IPADDR, SET_PORT, saveInfo):
@@ -26,7 +27,6 @@ class Logger:
     self.logging = False 
     self.logThread = Thread(target = self.loggerThread)
     self.logThread.daemon = True
-    
     self.saveFilePrefix = saveInfo["saveFilePrefix"]
     self.saveConfig = {}
     self.filePtrs = []
@@ -58,26 +58,39 @@ class Logger:
     self.running = True
     msgsReceived = 0
     while self.running == True:
+      print("Is the recvfrom blocking?")
       data, addr = self.socket.recvfrom(md.MAX_PACKET_LENGTH)
+      print("The recvfrom isn't blocking yet")
       header = md.MSG_HEADER()
       MR.readMessage(data, header)
-      msgsReceived = msgsReceived + 1
+      print(self.running, header.msg_type)
       if header.msg_type == md.START_RECORDING:
         self.logging = True
       elif header.msg_type == md.STOP_RECORDING:
         self.logging = False
-      elif header.msg_type == md.SESSION_END:
         self.running = False
-        for f in self.filePtrs:
-          f.close()
+      elif header.msg_type == md.PAUSE_RECORDING:
+        self.logging = False
+      elif header.msg_type == md.RESUME_RECORDING:
+        self.logging = True 
+      
       if self.logging == True and header.msg_type in self.saveConfig.keys():
         filePtr = self.saveConfig[header.msg_type]
         filePtr.write(data)
+        msgsReceived = msgsReceived + 1
+        print("I'm loggin' shit, yo")
+      print("Whatwhatwhat")
       if msgsReceived > 100:
         for f in self.filePtrs:
           f.flush()
         msgsReceived = 0
-      time.sleep(0.001)
+      time.sleep(0.01)
+    print("I exited the logger function for some reason")
+    for f in self.filePtrs:
+      for f in self.filePtrs:
+          f.flush()
+      f.close()
+
 
 #if __name__ == "__main__":
 #  config = json.load(open("/home/mfl24/Documents/chaiProjects/hapticEnvironment_TrialControl/trialConfig/cstConfig.json"))

@@ -1,5 +1,4 @@
-{
-  "name": "cst",
+{ "name": "cstHapticOnly",
   "states": ["start", "running"],
   "startState": "start", 
   "save_params":{"hapticData.data":["HAPTIC_DATA_STREAM"], 
@@ -14,7 +13,7 @@
         "cstName":"cst", 
         "lambdaVal":1.0, 
         "forceMagnitude":1.0, 
-        "visionEnabled": 1, 
+        "visionEnabled": 0, 
         "hapticEnabled":1
       }
     }
@@ -29,8 +28,7 @@
       "REMOVE_OBJECT":{
         "objectName": "center"
       }
-    }
-  ],
+    }],
   "start": {
     "type": "ReachHoldState",
     "transitions": {"success":["running"], "fail":["running"]},

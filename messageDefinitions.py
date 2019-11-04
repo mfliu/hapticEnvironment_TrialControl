@@ -1,7 +1,7 @@
 '''Wrapper for messageDefinitions.h
 
 Generated with:
-ctypesgen.py --cpp=clang -E -a -o ../hapticEnvironment/python/messageDefinitions.py ../hapticEnvironment/common/messageDefinitions.h
+ctypesgen.py --cpp=clang -E -a -o ../hapticEnvironment_TrialControl/messageDefinitions.py ../hapticEnvironment/common/messageDefinitions.h
 
 Do not modify this file.
 '''
@@ -606,7 +606,7 @@ add_library_search_dirs([])
 
 # No modules
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 60
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 63
 class struct_anon_1(Structure):
     pass
 
@@ -623,9 +623,9 @@ struct_anon_1._fields_ = [
     ('timestamp', c_double),
 ]
 
-MSG_HEADER = struct_anon_1 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 60
+MSG_HEADER = struct_anon_1 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 63
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 69
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 72
 class struct_anon_2(Structure):
     pass
 
@@ -640,9 +640,9 @@ struct_anon_2._fields_ = [
     ('b', c_int),
 ]
 
-M_TEST_PACKET = struct_anon_2 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 69
+M_TEST_PACKET = struct_anon_2 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 72
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 73
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 76
 class struct_anon_3(Structure):
     pass
 
@@ -653,9 +653,9 @@ struct_anon_3._fields_ = [
     ('header', MSG_HEADER),
 ]
 
-M_SESSION_START = struct_anon_3 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 73
+M_SESSION_START = struct_anon_3 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 76
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 77
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 80
 class struct_anon_4(Structure):
     pass
 
@@ -666,9 +666,9 @@ struct_anon_4._fields_ = [
     ('header', MSG_HEADER),
 ]
 
-M_SESSION_END = struct_anon_4 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 77
+M_SESSION_END = struct_anon_4 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 80
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 81
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 84
 class struct_anon_5(Structure):
     pass
 
@@ -679,9 +679,9 @@ struct_anon_5._fields_ = [
     ('header', MSG_HEADER),
 ]
 
-M_TRIAL_START = struct_anon_5 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 81
+M_TRIAL_START = struct_anon_5 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 84
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 85
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 88
 class struct_anon_6(Structure):
     pass
 
@@ -692,9 +692,9 @@ struct_anon_6._fields_ = [
     ('header', MSG_HEADER),
 ]
 
-M_TRIAL_END = struct_anon_6 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 85
+M_TRIAL_END = struct_anon_6 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 88
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 90
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 93
 class struct_anon_7(Structure):
     pass
 
@@ -707,9 +707,9 @@ struct_anon_7._fields_ = [
     ('filename', c_char * 128),
 ]
 
-M_START_RECORDING = struct_anon_7 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 90
+M_START_RECORDING = struct_anon_7 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 93
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 94
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 97
 class struct_anon_8(Structure):
     pass
 
@@ -720,9 +720,9 @@ struct_anon_8._fields_ = [
     ('header', MSG_HEADER),
 ]
 
-M_STOP_RECORDING = struct_anon_8 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 94
+M_STOP_RECORDING = struct_anon_8 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 97
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 99
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 102
 class struct_anon_9(Structure):
     pass
 
@@ -735,9 +735,9 @@ struct_anon_9._fields_ = [
     ('objectName', c_char * 128),
 ]
 
-M_REMOVE_OBJECT = struct_anon_9 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 99
+M_REMOVE_OBJECT = struct_anon_9 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 102
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 104
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 107
 class struct_anon_10(Structure):
     pass
 
@@ -750,60 +750,46 @@ struct_anon_10._fields_ = [
     ('keyname', c_char * 128),
 ]
 
-M_KEYPRESS = struct_anon_10 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 104
+M_KEYPRESS = struct_anon_10 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 107
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 113
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 111
 class struct_anon_11(Structure):
     pass
 
 struct_anon_11.__slots__ = [
     'header',
-    'cstName',
-    'lambdaVal',
-    'forceMagnitude',
-    'visionEnabled',
-    'hapticEnabled',
 ]
 struct_anon_11._fields_ = [
     ('header', MSG_HEADER),
-    ('cstName', c_char * 128),
-    ('lambdaVal', c_double),
-    ('forceMagnitude', c_double),
-    ('visionEnabled', c_int),
-    ('hapticEnabled', c_int),
 ]
 
-M_CST_CREATE = struct_anon_11 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 113
+M_PAUSE_RECORDING = struct_anon_11 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 111
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 118
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 115
 class struct_anon_12(Structure):
     pass
 
 struct_anon_12.__slots__ = [
     'header',
-    'cstName',
 ]
 struct_anon_12._fields_ = [
     ('header', MSG_HEADER),
-    ('cstName', c_char * 128),
 ]
 
-M_CST_DESTRUCT = struct_anon_12 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 118
+M_RESUME_RECORDING = struct_anon_12 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 115
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 123
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 119
 class struct_anon_13(Structure):
     pass
 
 struct_anon_13.__slots__ = [
     'header',
-    'cstName',
 ]
 struct_anon_13._fields_ = [
     ('header', MSG_HEADER),
-    ('cstName', c_char * 128),
 ]
 
-M_CST_START = struct_anon_13 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 123
+M_RESET_WORLD = struct_anon_13 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 119
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 128
 class struct_anon_14(Structure):
@@ -812,89 +798,142 @@ class struct_anon_14(Structure):
 struct_anon_14.__slots__ = [
     'header',
     'cstName',
+    'lambdaVal',
+    'forceMagnitude',
+    'visionEnabled',
+    'hapticEnabled',
 ]
 struct_anon_14._fields_ = [
     ('header', MSG_HEADER),
     ('cstName', c_char * 128),
+    ('lambdaVal', c_double),
+    ('forceMagnitude', c_double),
+    ('visionEnabled', c_int),
+    ('hapticEnabled', c_int),
 ]
 
-M_CST_STOP = struct_anon_14 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 128
+M_CST_CREATE = struct_anon_14 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 128
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 134
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 133
 class struct_anon_15(Structure):
     pass
 
 struct_anon_15.__slots__ = [
     'header',
     'cstName',
-    'visionEnabled',
 ]
 struct_anon_15._fields_ = [
     ('header', MSG_HEADER),
     ('cstName', c_char * 128),
-    ('visionEnabled', c_int),
 ]
 
-M_CST_SET_VISUAL = struct_anon_15 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 134
+M_CST_DESTRUCT = struct_anon_15 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 133
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 140
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 138
 class struct_anon_16(Structure):
     pass
 
 struct_anon_16.__slots__ = [
     'header',
     'cstName',
-    'hapticEnabled',
 ]
 struct_anon_16._fields_ = [
     ('header', MSG_HEADER),
     ('cstName', c_char * 128),
-    ('hapticEnabled', c_int),
 ]
 
-M_CST_SET_HAPTIC = struct_anon_16 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 140
+M_CST_START = struct_anon_16 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 138
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 146
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 143
 class struct_anon_17(Structure):
     pass
 
 struct_anon_17.__slots__ = [
     'header',
     'cstName',
-    'lambdaVal',
 ]
 struct_anon_17._fields_ = [
     ('header', MSG_HEADER),
     ('cstName', c_char * 128),
-    ('lambdaVal', c_double),
 ]
 
-M_CST_SET_LAMBDA = struct_anon_17 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 146
+M_CST_STOP = struct_anon_17 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 143
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 153
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 149
 class struct_anon_18(Structure):
     pass
 
 struct_anon_18.__slots__ = [
     'header',
+    'cstName',
+    'visionEnabled',
+]
+struct_anon_18._fields_ = [
+    ('header', MSG_HEADER),
+    ('cstName', c_char * 128),
+    ('visionEnabled', c_int),
+]
+
+M_CST_SET_VISUAL = struct_anon_18 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 149
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 155
+class struct_anon_19(Structure):
+    pass
+
+struct_anon_19.__slots__ = [
+    'header',
+    'cstName',
+    'hapticEnabled',
+]
+struct_anon_19._fields_ = [
+    ('header', MSG_HEADER),
+    ('cstName', c_char * 128),
+    ('hapticEnabled', c_int),
+]
+
+M_CST_SET_HAPTIC = struct_anon_19 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 155
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 161
+class struct_anon_20(Structure):
+    pass
+
+struct_anon_20.__slots__ = [
+    'header',
+    'cstName',
+    'lambdaVal',
+]
+struct_anon_20._fields_ = [
+    ('header', MSG_HEADER),
+    ('cstName', c_char * 128),
+    ('lambdaVal', c_double),
+]
+
+M_CST_SET_LAMBDA = struct_anon_20 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 161
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 168
+class struct_anon_21(Structure):
+    pass
+
+struct_anon_21.__slots__ = [
+    'header',
     'cursorX',
     'cursorY',
     'cursorZ',
 ]
-struct_anon_18._fields_ = [
+struct_anon_21._fields_ = [
     ('header', MSG_HEADER),
     ('cursorX', c_double),
     ('cursorY', c_double),
     ('cursorZ', c_double),
 ]
 
-M_CST_DATA = struct_anon_18 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 153
+M_CST_DATA = struct_anon_21 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 168
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 167
-class struct_anon_19(Structure):
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 182
+class struct_anon_22(Structure):
     pass
 
-struct_anon_19.__slots__ = [
+struct_anon_22.__slots__ = [
     'header',
     'posX',
     'posY',
@@ -907,7 +946,7 @@ struct_anon_19.__slots__ = [
     'forceZ',
     'collisions',
 ]
-struct_anon_19._fields_ = [
+struct_anon_22._fields_ = [
     ('header', MSG_HEADER),
     ('posX', c_double),
     ('posY', c_double),
@@ -921,179 +960,179 @@ struct_anon_19._fields_ = [
     ('collisions', (c_char * 128) * 4),
 ]
 
-M_HAPTIC_DATA_STREAM = struct_anon_19 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 167
+M_HAPTIC_DATA_STREAM = struct_anon_22 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 182
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 173
-class struct_anon_20(Structure):
-    pass
-
-struct_anon_20.__slots__ = [
-    'header',
-    'objectName',
-    'enabled',
-]
-struct_anon_20._fields_ = [
-    ('header', MSG_HEADER),
-    ('objectName', c_char * 128),
-    ('enabled', c_int),
-]
-
-M_HAPTICS_SET_ENABLED = struct_anon_20 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 173
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 179
-class struct_anon_21(Structure):
-    pass
-
-struct_anon_21.__slots__ = [
-    'header',
-    'effectName',
-    'enabled',
-]
-struct_anon_21._fields_ = [
-    ('header', MSG_HEADER),
-    ('effectName', c_char * 128),
-    ('enabled', c_int),
-]
-
-M_HAPTICS_SET_ENABLED_WORLD = struct_anon_21 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 179
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 185
-class struct_anon_22(Structure):
-    pass
-
-struct_anon_22.__slots__ = [
-    'header',
-    'objectName',
-    'stiffness',
-]
-struct_anon_22._fields_ = [
-    ('header', MSG_HEADER),
-    ('objectName', c_char * 128),
-    ('stiffness', c_double),
-]
-
-M_HAPTICS_SET_STIFFNESS = struct_anon_22 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 185
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 191
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 188
 class struct_anon_23(Structure):
     pass
 
 struct_anon_23.__slots__ = [
     'header',
-    'bWidth',
-    'bHeight',
+    'objectName',
+    'enabled',
 ]
 struct_anon_23._fields_ = [
     ('header', MSG_HEADER),
-    ('bWidth', c_double),
-    ('bHeight', c_double),
+    ('objectName', c_char * 128),
+    ('enabled', c_int),
 ]
 
-M_HAPTICS_BOUNDING_PLANE = struct_anon_23 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 191
+M_HAPTICS_SET_ENABLED = struct_anon_23 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 188
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 198
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 194
 class struct_anon_24(Structure):
     pass
 
 struct_anon_24.__slots__ = [
     'header',
     'effectName',
-    'direction',
-    'magnitude',
+    'enabled',
 ]
 struct_anon_24._fields_ = [
     ('header', MSG_HEADER),
     ('effectName', c_char * 128),
-    ('direction', c_double),
-    ('magnitude', c_double),
+    ('enabled', c_int),
 ]
 
-M_HAPTICS_CONSTANT_FORCE_FIELD = struct_anon_24 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 198
+M_HAPTICS_SET_ENABLED_WORLD = struct_anon_24 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 194
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 204
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 200
 class struct_anon_25(Structure):
     pass
 
 struct_anon_25.__slots__ = [
     'header',
-    'effectName',
-    'viscosityMatrix',
+    'objectName',
+    'stiffness',
 ]
 struct_anon_25._fields_ = [
     ('header', MSG_HEADER),
-    ('effectName', c_char * 128),
-    ('viscosityMatrix', c_double * 9),
+    ('objectName', c_char * 128),
+    ('stiffness', c_double),
 ]
 
-M_HAPTICS_VISCOSITY_FIELD = struct_anon_25 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 204
+M_HAPTICS_SET_STIFFNESS = struct_anon_25 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 200
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 209
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 206
 class struct_anon_26(Structure):
     pass
 
 struct_anon_26.__slots__ = [
     'header',
-    'effectName',
+    'bWidth',
+    'bHeight',
 ]
 struct_anon_26._fields_ = [
     ('header', MSG_HEADER),
-    ('effectName', c_char * 128),
+    ('bWidth', c_double),
+    ('bHeight', c_double),
 ]
 
-M_HAPTICS_FREEZE_EFFECT = struct_anon_26 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 209
+M_HAPTICS_BOUNDING_PLANE = struct_anon_26 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 206
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 214
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 213
 class struct_anon_27(Structure):
     pass
 
 struct_anon_27.__slots__ = [
     'header',
     'effectName',
+    'direction',
+    'magnitude',
 ]
 struct_anon_27._fields_ = [
     ('header', MSG_HEADER),
     ('effectName', c_char * 128),
+    ('direction', c_double),
+    ('magnitude', c_double),
 ]
 
-M_HAPTICS_REMOVE_WORLD_EFFECT = struct_anon_27 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 214
+M_HAPTICS_CONSTANT_FORCE_FIELD = struct_anon_27 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 213
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 220
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 219
 class struct_anon_28(Structure):
     pass
 
 struct_anon_28.__slots__ = [
     'header',
-    'objectName',
-    'enabled',
+    'effectName',
+    'viscosityMatrix',
 ]
 struct_anon_28._fields_ = [
     ('header', MSG_HEADER),
-    ('objectName', c_char * 128),
-    ('enabled', c_int),
+    ('effectName', c_char * 128),
+    ('viscosityMatrix', c_double * 9),
 ]
 
-M_GRAPHICS_SET_ENABLED = struct_anon_28 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 220
+M_HAPTICS_VISCOSITY_FIELD = struct_anon_28 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 219
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 225
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 224
 class struct_anon_29(Structure):
     pass
 
 struct_anon_29.__slots__ = [
     'header',
-    'color',
+    'effectName',
 ]
 struct_anon_29._fields_ = [
     ('header', MSG_HEADER),
-    ('color', c_float * 4),
+    ('effectName', c_char * 128),
 ]
 
-M_GRAPHICS_CHANGE_BG_COLOR = struct_anon_29 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 225
+M_HAPTICS_FREEZE_EFFECT = struct_anon_29 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 224
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 238
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 229
 class struct_anon_30(Structure):
     pass
 
 struct_anon_30.__slots__ = [
+    'header',
+    'effectName',
+]
+struct_anon_30._fields_ = [
+    ('header', MSG_HEADER),
+    ('effectName', c_char * 128),
+]
+
+M_HAPTICS_REMOVE_WORLD_EFFECT = struct_anon_30 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 229
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 235
+class struct_anon_31(Structure):
+    pass
+
+struct_anon_31.__slots__ = [
+    'header',
+    'objectName',
+    'enabled',
+]
+struct_anon_31._fields_ = [
+    ('header', MSG_HEADER),
+    ('objectName', c_char * 128),
+    ('enabled', c_int),
+]
+
+M_GRAPHICS_SET_ENABLED = struct_anon_31 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 235
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 240
+class struct_anon_32(Structure):
+    pass
+
+struct_anon_32.__slots__ = [
+    'header',
+    'color',
+]
+struct_anon_32._fields_ = [
+    ('header', MSG_HEADER),
+    ('color', c_float * 4),
+]
+
+M_GRAPHICS_CHANGE_BG_COLOR = struct_anon_32 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 240
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 253
+class struct_anon_33(Structure):
+    pass
+
+struct_anon_33.__slots__ = [
     'header',
     'objectName',
     'height',
@@ -1105,7 +1144,7 @@ struct_anon_30.__slots__ = [
     'rotation',
     'color',
 ]
-struct_anon_30._fields_ = [
+struct_anon_33._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('height', c_double),
@@ -1118,13 +1157,13 @@ struct_anon_30._fields_ = [
     ('color', c_float * 4),
 ]
 
-M_GRAPHICS_PIPE = struct_anon_30 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 238
+M_GRAPHICS_PIPE = struct_anon_33 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 253
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 252
-class struct_anon_31(Structure):
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 267
+class struct_anon_34(Structure):
     pass
 
-struct_anon_31.__slots__ = [
+struct_anon_34.__slots__ = [
     'header',
     'objectName',
     'aLength',
@@ -1137,7 +1176,7 @@ struct_anon_31.__slots__ = [
     'position',
     'color',
 ]
-struct_anon_31._fields_ = [
+struct_anon_34._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('aLength', c_double),
@@ -1151,30 +1190,30 @@ struct_anon_31._fields_ = [
     ('color', c_float * 4),
 ]
 
-M_GRAPHICS_ARROW = struct_anon_31 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 252
+M_GRAPHICS_ARROW = struct_anon_34 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 267
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 258
-class struct_anon_32(Structure):
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 273
+class struct_anon_35(Structure):
     pass
 
-struct_anon_32.__slots__ = [
+struct_anon_35.__slots__ = [
     'header',
     'objectName',
     'color',
 ]
-struct_anon_32._fields_ = [
+struct_anon_35._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('color', c_float * 4),
 ]
 
-M_GRAPHICS_CHANGE_OBJECT_COLOR = struct_anon_32 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 258
+M_GRAPHICS_CHANGE_OBJECT_COLOR = struct_anon_35 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 273
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 267
-class struct_anon_33(Structure):
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 282
+class struct_anon_36(Structure):
     pass
 
-struct_anon_33.__slots__ = [
+struct_anon_36.__slots__ = [
     'header',
     'objectName',
     'numDots',
@@ -1182,7 +1221,7 @@ struct_anon_33.__slots__ = [
     'direction',
     'magnitude',
 ]
-struct_anon_33._fields_ = [
+struct_anon_36._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('numDots', c_int),
@@ -1191,13 +1230,13 @@ struct_anon_33._fields_ = [
     ('magnitude', c_double),
 ]
 
-M_GRAPHICS_MOVING_DOTS = struct_anon_33 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 267
+M_GRAPHICS_MOVING_DOTS = struct_anon_36 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 282
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 277
-class struct_anon_34(Structure):
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 292
+class struct_anon_37(Structure):
     pass
 
-struct_anon_34.__slots__ = [
+struct_anon_37.__slots__ = [
     'header',
     'objectName',
     'sizeX',
@@ -1206,7 +1245,7 @@ struct_anon_34.__slots__ = [
     'localPosition',
     'color',
 ]
-struct_anon_34._fields_ = [
+struct_anon_37._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('sizeX', c_double),
@@ -1216,20 +1255,20 @@ struct_anon_34._fields_ = [
     ('color', c_float * 4),
 ]
 
-M_GRAPHICS_SHAPE_BOX = struct_anon_34 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 277
+M_GRAPHICS_SHAPE_BOX = struct_anon_37 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 292
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 285
-class struct_anon_35(Structure):
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 300
+class struct_anon_38(Structure):
     pass
 
-struct_anon_35.__slots__ = [
+struct_anon_38.__slots__ = [
     'header',
     'objectName',
     'radius',
     'localPosition',
     'color',
 ]
-struct_anon_35._fields_ = [
+struct_anon_38._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('radius', c_double),
@@ -1237,13 +1276,13 @@ struct_anon_35._fields_ = [
     ('color', c_float * 4),
 ]
 
-M_GRAPHICS_SHAPE_SPHERE = struct_anon_35 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 285
+M_GRAPHICS_SHAPE_SPHERE = struct_anon_38 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 300
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 294
-class struct_anon_36(Structure):
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 309
+class struct_anon_39(Structure):
     pass
 
-struct_anon_36.__slots__ = [
+struct_anon_39.__slots__ = [
     'header',
     'objectName',
     'innerRadius',
@@ -1251,7 +1290,7 @@ struct_anon_36.__slots__ = [
     'localPosition',
     'color',
 ]
-struct_anon_36._fields_ = [
+struct_anon_39._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('innerRadius', c_double),
@@ -1260,7 +1299,7 @@ struct_anon_36._fields_ = [
     ('color', c_float * 4),
 ]
 
-M_GRAPHICS_SHAPE_TORUS = struct_anon_36 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 294
+M_GRAPHICS_SHAPE_TORUS = struct_anon_39 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 309
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 1
 try:
@@ -1334,157 +1373,175 @@ try:
 except:
     pass
 
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 18
+try:
+    PAUSE_RECORDING = 9
+except:
+    pass
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 19
+try:
+    RESUME_RECORDING = 10
+except:
+    pass
+
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 20
 try:
-    CST_CREATE = 500
-except:
-    pass
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 21
-try:
-    CST_DESTRUCT = 501
-except:
-    pass
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 22
-try:
-    CST_START = 502
+    RESET_WORLD = 11
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 23
 try:
-    CST_STOP = 503
+    CST_CREATE = 500
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 24
 try:
-    CST_SET_VISUAL = 504
+    CST_DESTRUCT = 501
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 25
 try:
-    CST_SET_HAPTIC = 505
+    CST_START = 502
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 26
 try:
-    CST_SET_LAMBDA = 506
+    CST_STOP = 503
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 27
 try:
-    CST_DATA = 507
+    CST_SET_VISUAL = 504
+except:
+    pass
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 28
+try:
+    CST_SET_HAPTIC = 505
+except:
+    pass
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 29
+try:
+    CST_SET_LAMBDA = 506
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 30
 try:
-    HAPTIC_DATA_STREAM = 1000
-except:
-    pass
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 31
-try:
-    HAPTICS_SET_ENABLED = 1001
-except:
-    pass
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 32
-try:
-    HAPTICS_SET_ENABLED_WORLD = 1002
+    CST_DATA = 507
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 33
 try:
-    HAPTICS_SET_STIFFNESS = 1008
+    HAPTIC_DATA_STREAM = 1000
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 34
 try:
-    HAPTICS_BOUNDING_PLANE = 1009
+    HAPTICS_SET_ENABLED = 1001
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 35
 try:
-    HAPTICS_CONSTANT_FORCE_FIELD = 1010
+    HAPTICS_SET_ENABLED_WORLD = 1002
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 36
 try:
-    HAPTICS_VISCOSITY_FIELD = 1011
+    HAPTICS_SET_STIFFNESS = 1008
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 37
 try:
-    HAPTICS_FREEZE_EFFECT = 1012
+    HAPTICS_BOUNDING_PLANE = 1009
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 38
 try:
-    HAPTICS_REMOVE_WORLD_EFFECT = 1013
+    HAPTICS_CONSTANT_FORCE_FIELD = 1010
+except:
+    pass
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 39
+try:
+    HAPTICS_VISCOSITY_FIELD = 1011
+except:
+    pass
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 40
+try:
+    HAPTICS_FREEZE_EFFECT = 1012
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 41
 try:
-    GRAPHICS_SET_ENABLED = 2000
-except:
-    pass
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 42
-try:
-    GRAPHICS_CHANGE_BG_COLOR = 2001
-except:
-    pass
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 43
-try:
-    GRAPHICS_PIPE = 2002
+    HAPTICS_REMOVE_WORLD_EFFECT = 1013
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 44
 try:
-    GRAPHICS_ARROW = 2003
+    GRAPHICS_SET_ENABLED = 2000
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 45
 try:
-    GRAPHICS_CHANGE_OBJECT_COLOR = 2004
+    GRAPHICS_CHANGE_BG_COLOR = 2001
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 46
 try:
-    GRAPHICS_MOVING_DOTS = 2014
+    GRAPHICS_PIPE = 2002
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 47
 try:
-    GRAPHICS_SHAPE_BOX = 2046
+    GRAPHICS_ARROW = 2003
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 48
 try:
-    GRAPHICS_SHAPE_SPHERE = 2050
+    GRAPHICS_CHANGE_OBJECT_COLOR = 2004
 except:
     pass
 
 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 49
+try:
+    GRAPHICS_MOVING_DOTS = 2014
+except:
+    pass
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 50
+try:
+    GRAPHICS_SHAPE_BOX = 2046
+except:
+    pass
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 51
+try:
+    GRAPHICS_SHAPE_SPHERE = 2050
+except:
+    pass
+
+# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 52
 try:
     GRAPHICS_SHAPE_TORUS = 2051
 except:

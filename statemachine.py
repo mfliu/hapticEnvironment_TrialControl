@@ -23,6 +23,8 @@ import msgUtils
 class StateMachine(object):
   def __init__(self, configFile, saveFilePrefix):
     config = json.load(open(configFile))
+    self.running = False 
+    self.stopped = True
     self.build(config, saveFilePrefix)
     
   # Build should return the start state of the StateMachine
@@ -34,12 +36,11 @@ class StateMachine(object):
     self.config = config
     self.transitionTable = {}
     self.states = {}
-    self.running = False
     self.currentState = self.config["startState"]
     
     for startupMsgs in self.config["setup_msg"]:
       msgUtils.makeMessage(startupMsgs)  
-    
+
     for stateName in self.stateNameList:
       stateDict = config[stateName]
       stateType = stateDict["type"]
@@ -55,13 +56,18 @@ class StateMachine(object):
       for transitionSymbol in stateTransitions.keys():
         self.transitionTable[(stateName, transitionSymbol)] = stateTransitions[transitionSymbol]
       self.states[stateName] = state
-    
+    time.sleep(0.5)
+
   def run(self):
     self.running = True
+    self.stopped = False
+    self.paused = False
     while self.currentState != "end" and self.running == True:
+      if self.paused == True:
+        continue
       currentState = self.states[self.currentState]
       transition = currentState.entry(self.currentState, self)
-      print(self.currentState, transition)
+      #print(self.currentState, transition)
       nextStates = self.transitionTable[(self.currentState, transition)]
       if len(nextStates) > 1:
         nextState = random.choice(nextStates)
@@ -72,15 +78,9 @@ class StateMachine(object):
       self.currentState = nextState
     for endMessages in self.config["end_msg"]:
       msgUtils.makeMessage(endMessages)
+    self.stopped = True
     return "done"
   
-  #def message(self, data):
-  #  header = md.MSG_HEADER()
-  #  MR.readMessage(data, header)
-  #  if header.msg_type == md.CST_DATA:
-  #    msg_data = md.M_CST_DATA()
-  #    MR.readMessage(data, msg_data)
-  #    Globals.CST_DATA = msg_data
 
 if __name__ == "__main__":
   taskConfig = sys.argv[1]

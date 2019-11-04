@@ -5,9 +5,9 @@ import sys
 import platform
 
 MODULE_NUM = 2
-HOME_PATH = "/home/monica/Documents/chaiProjects/hapticEnvironment_TrialControl/"
-UTILS_PATH = "/home/monica/Documents/chaiProjects/hapticEnvironment_TrialControl/utils/"
-NATNET_PATH = "/home/monica/Documents/chaiProjects/NatNetSDK/Samples/PythonClient/"
+HOME_PATH = "/home/mfl24/Documents/chaiProjects/hapticEnvironment_TrialControl/"
+UTILS_PATH = "/home/mfl24/Documents/chaiProjects/hapticEnvironment_TrialControl/utils/"
+NATNET_PATH = "/home/mfl24/Documents/chaiProjects/NatNetSDK/Samples/PythonClient/"
 sys.path.append(NATNET_PATH)
 
 CHAI_DATA = md.M_HAPTIC_DATA_STREAM() 
@@ -25,10 +25,10 @@ RPC_PORT = 8080
 MOCAP_IP = "127.0.0.1"
 MOCAP_PORT = 1510
 
-EMG_COMMAND_IP = "192.168.0.199"
+EMG_COMMAND_IP = "127.0.0.1"
 EMG_COMMAND_PORT = 50040
 
-EMG_STREAM_IP = "192.168.0.199"
+EMG_STREAM_IP = "127.0.0.1"
 EMG_STREAM_PORT = 50043
 
 client = None 
