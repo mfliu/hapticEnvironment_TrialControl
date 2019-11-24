@@ -12,5 +12,5 @@ def makeMessage(message):
 
 def sendMessage(packet):
   client = Globals.getClient()
-  client.call("sendMessage", bytes(packet), sizeof(packet), Globals.MODULE_NUM) 
+  client.call_async("sendMessage", bytes(packet), sizeof(packet), Globals.MODULE_NUM) 
   #Globals.getSenderSocket().sendto(packet, (Globals.SENDER_IP, Globals.SENDER_PORT))

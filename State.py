@@ -4,6 +4,7 @@ import struct
 import time
 import sys
 import numpy as np 
+import math 
 
 import Globals 
 import messageDefinitions as md
@@ -24,24 +25,35 @@ class State(ABC):
   def entry(self):
     pass
   
-  def enableStateObjs(self):
+  def enableStateObjs(self, sm):
     for gKey in self.graphicObjs:
       graphics.enableGraphics(gKey, 1)
     for hKey in self.hapticObjs:
-      haptics.enableHapticsWorld(hKey, 1)
+      haptics.enableHaptics(hKey, self.hapticObjs[hKey], 1, sm)
 
-  def disableStateObjs(self):
+  def disableStateObjs(self, sm):
     for gKey in self.graphicObjs:
       graphics.enableGraphics(gKey, 0)
     for hKey in self.hapticObjs:
-      haptics.enableHapticsWorld(hKey, 0)
+      haptics.enableHaptics(hKey, self.hapticObjs[hKey], 0, sm)
+
+class EmptyState(State):
+  def __init__(self, name, transitions, graphicObjs, hapticObjs):
+    super(EmptyState, self).__init__(name, transitions, graphicObjs, hapticObjs)
+
+  def entry(self, name, sm):
+    waitTime = sm.config[name]["waitTime"]
+    start = time.time()
+    while (time.time() - start) <= waitTime:
+      continue
+    return "done"
 
 class ReachState(State):
   def __init__(self, name, transitions, graphicObjs, hapticObjs):
     super(ReachState, self).__init__(name, transitions, graphicObjs, hapticObjs)
 
   def entry(self, name, sm):
-    self.enableStateObjs()
+    self.enableStateObjs(sm)
     startTime = time.time()
     timeLimit = sm.config[name]["timeLimit"]
     while (time.time() - startTime) < timeLimit:
@@ -51,28 +63,29 @@ class ReachState(State):
           sm.taskVars["taskControl"].addNode()
         return "success"
     graphics.changeColor(self.name, 1.0, 0.0,0.0, 1.0)
-    self.disableStateObjs()
+    self.disableStateObjs(sm)
     return "fail"
-
 
 class ReachHoldState(State):
   def __init__(self, name, transitions, graphicObjs, hapticObjs):
     super(ReachHoldState, self).__init__(name, transitions, graphicObjs, hapticObjs)
 
   def entry(self, name, sm):
-    self.enableStateObjs()
+    self.enableStateObjs(sm)
     startTime = time.time()
     holdLength = sm.config[name]["holdLength"]
     timeLimit = sm.config[name]["timeLimit"]
     objectName = sm.config[name]["targetObjectName"]
     objectDict = sm.config[name]["graphics"][objectName]
-    graphics.changeColor(objectName, 0.83, 0.83, 0.83, 1.0)
+    objectColor = objectDict["color"]
+    graphics.changeColor(objectName, objectColor[0], objectColor[1], objectColor[2], objectColor[3])
     while haptics.collide2D(objectDict) == False:
       if time.time()-startTime > timeLimit:
         graphics.changeColor(objectName, 1.0, 0.0, 0.0, 1.0)
         time.sleep(0.1)
         if sm.taskVars["updateState"] == name:
           sm.taskVars["taskControl"].addNode()
+        self.disableStateObjs(sm)
         return "fail"
     holdStart = time.time()
     while time.time()-holdStart < holdLength:
@@ -81,10 +94,12 @@ class ReachHoldState(State):
         time.sleep(0.1)
         if sm.taskVars["updateState"] == name:
           sm.taskVars["taskControl"].addNode()
+        self.disableStateObjs(sm)
         return "fail"
     time.sleep(0.1)
     if sm.taskVars["updateState"] == name:
       sm.taskVars["taskControl"].addNode()
+    self.disableStateObjs(sm)
     return "success"
 
 class CSTRunningState(State):
@@ -150,6 +165,47 @@ class CSTRunningState(State):
     time.sleep(0.1)
     return "next"
 
+class PassivePerturbationState(State):
+  def __init__(self, name, transitions, graphicObjs, hapticObjs):
+    super(PassivePerturbationState, self).__init__(name, transitions, graphicObjs, hapticObjs)
+
+  def entry(self, name, sm):
+    self.enableStateObjs(sm)
+    forceFieldName = list(sm.config[name]["haptics"].keys())[0]
+    if sm.taskVars[forceFieldName] == 0:
+      if forceFieldName == "field1Force":
+        timeToBump = np.sqrt(2*sm.taskVars["bumpDistance"]/sm.taskVars["field2Force"])
+      elif forceFieldName == "field2Force":
+        timeToBump = np.sqrt(2*sm.taskVars["bumpDistance"]/sm.taskVars["field1Force"])
+    else:
+      timeToBump = np.sqrt(2*sm.taskVars["bumpDistance"]/sm.taskVars[forceFieldName])
+    timeToBump = round(timeToBump, 2)
+    time.sleep(math.ceil(timeToBump))
+    self.disableStateObjs(sm)
+    return "done"
+
 class DecisionState(State):
   def __init__(self, name, transitions, graphicObjs, hapticObjs):
     super(DecisionState, self).__init__(name, transitions, graphicObjs, hapticObjs)
+
+  def entry(self, name, sm):
+    self.enableStateObjs(sm)
+    object1Name = sm.config[name]["object1Name"]
+    object2Name = sm.config[name]["object2Name"]
+    object1Dict = sm.config[name]["graphics"][object1Name]
+    object2Dict = sm.config[name]["graphics"][object2Name]
+    decisionMade = False
+    while decisionMade == False:
+      if haptics.collide2D(object1Dict) == True:
+        decisionMade = True 
+        decision = object1Name 
+        sm.taskVars["decision"] = 1
+      if haptics.collide2D(object2Dict) == True:
+        decisionMade = True 
+        decision = object2Name 
+        sm.taskVars["decision"] = 2
+    if sm.taskVars["updateState"] == name:
+      sm.taskVars["trialNum"] = sm.taskVars["trialNum"] + 1
+      sm.taskVars["taskControl"].addNode()
+    self.disableStateObjs(sm)
+    return decision

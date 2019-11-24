@@ -1,10 +1,10 @@
 import sys 
-sys.path.append("/home/monica/Documents/chaiProjects/hapticEnvironment_TrialControl/")
 import numpy as np
 import messageDefinitions as md
 from ctypes import *
 import Messenger as MR
 import Globals 
+sys.path.append(Globals.HOME_PATH)
 
 def enableGraphics(objectName, setVal):
   name = create_string_buffer(bytes(objectName, 'utf-8'), md.MAX_STRING_LENGTH)
@@ -60,6 +60,7 @@ def makeBox(objectName, size, position, color, enabled):
   box.color = (c_float*4) (color[0], color[1], color[2], color[3])
   packet = MR.makeMessage(box)
   MR.sendMessage(packet)
+  enableGraphics(objectName, enabled)
 
 def setBackground(red, green, blue):
   bg = md.M_GRAPHICS_CHANGE_BG_COLOR()

@@ -1,7 +1,7 @@
 '''Wrapper for messageDefinitions.h
 
 Generated with:
-ctypesgen.py --cpp=clang -E -a -o ../hapticEnvironment_TrialControl/messageDefinitions.py ../hapticEnvironment/common/messageDefinitions.h
+ctypesgen.py --cpp=clang -E -a -o ../../RNEL_GIT/haptic_environment_task_control/messageDefinitions.py ../../RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h
 
 Do not modify this file.
 '''
@@ -606,7 +606,7 @@ add_library_search_dirs([])
 
 # No modules
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 63
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 68
 class struct_anon_1(Structure):
     pass
 
@@ -623,9 +623,9 @@ struct_anon_1._fields_ = [
     ('timestamp', c_double),
 ]
 
-MSG_HEADER = struct_anon_1 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 63
+MSG_HEADER = struct_anon_1 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 68
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 72
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 77
 class struct_anon_2(Structure):
     pass
 
@@ -640,9 +640,9 @@ struct_anon_2._fields_ = [
     ('b', c_int),
 ]
 
-M_TEST_PACKET = struct_anon_2 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 72
+M_TEST_PACKET = struct_anon_2 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 77
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 76
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 81
 class struct_anon_3(Structure):
     pass
 
@@ -653,9 +653,9 @@ struct_anon_3._fields_ = [
     ('header', MSG_HEADER),
 ]
 
-M_SESSION_START = struct_anon_3 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 76
+M_SESSION_START = struct_anon_3 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 81
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 80
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 85
 class struct_anon_4(Structure):
     pass
 
@@ -666,22 +666,24 @@ struct_anon_4._fields_ = [
     ('header', MSG_HEADER),
 ]
 
-M_SESSION_END = struct_anon_4 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 80
+M_SESSION_END = struct_anon_4 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 85
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 84
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 90
 class struct_anon_5(Structure):
     pass
 
 struct_anon_5.__slots__ = [
     'header',
+    'trialNum',
 ]
 struct_anon_5._fields_ = [
     ('header', MSG_HEADER),
+    ('trialNum', c_int),
 ]
 
-M_TRIAL_START = struct_anon_5 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 84
+M_TRIAL_START = struct_anon_5 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 90
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 88
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 94
 class struct_anon_6(Structure):
     pass
 
@@ -692,9 +694,9 @@ struct_anon_6._fields_ = [
     ('header', MSG_HEADER),
 ]
 
-M_TRIAL_END = struct_anon_6 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 88
+M_TRIAL_END = struct_anon_6 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 94
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 93
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 99
 class struct_anon_7(Structure):
     pass
 
@@ -707,9 +709,9 @@ struct_anon_7._fields_ = [
     ('filename', c_char * 128),
 ]
 
-M_START_RECORDING = struct_anon_7 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 93
+M_START_RECORDING = struct_anon_7 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 99
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 97
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 103
 class struct_anon_8(Structure):
     pass
 
@@ -720,9 +722,9 @@ struct_anon_8._fields_ = [
     ('header', MSG_HEADER),
 ]
 
-M_STOP_RECORDING = struct_anon_8 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 97
+M_STOP_RECORDING = struct_anon_8 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 103
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 102
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 108
 class struct_anon_9(Structure):
     pass
 
@@ -735,9 +737,9 @@ struct_anon_9._fields_ = [
     ('objectName', c_char * 128),
 ]
 
-M_REMOVE_OBJECT = struct_anon_9 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 102
+M_REMOVE_OBJECT = struct_anon_9 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 108
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 107
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 113
 class struct_anon_10(Structure):
     pass
 
@@ -750,9 +752,9 @@ struct_anon_10._fields_ = [
     ('keyname', c_char * 128),
 ]
 
-M_KEYPRESS = struct_anon_10 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 107
+M_KEYPRESS = struct_anon_10 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 113
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 111
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 117
 class struct_anon_11(Structure):
     pass
 
@@ -763,9 +765,9 @@ struct_anon_11._fields_ = [
     ('header', MSG_HEADER),
 ]
 
-M_PAUSE_RECORDING = struct_anon_11 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 111
+M_PAUSE_RECORDING = struct_anon_11 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 117
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 115
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 121
 class struct_anon_12(Structure):
     pass
 
@@ -776,9 +778,9 @@ struct_anon_12._fields_ = [
     ('header', MSG_HEADER),
 ]
 
-M_RESUME_RECORDING = struct_anon_12 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 115
+M_RESUME_RECORDING = struct_anon_12 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 121
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 119
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 125
 class struct_anon_13(Structure):
     pass
 
@@ -789,9 +791,9 @@ struct_anon_13._fields_ = [
     ('header', MSG_HEADER),
 ]
 
-M_RESET_WORLD = struct_anon_13 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 119
+M_RESET_WORLD = struct_anon_13 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 125
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 128
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 134
 class struct_anon_14(Structure):
     pass
 
@@ -812,9 +814,9 @@ struct_anon_14._fields_ = [
     ('hapticEnabled', c_int),
 ]
 
-M_CST_CREATE = struct_anon_14 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 128
+M_CST_CREATE = struct_anon_14 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 134
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 133
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 139
 class struct_anon_15(Structure):
     pass
 
@@ -827,9 +829,9 @@ struct_anon_15._fields_ = [
     ('cstName', c_char * 128),
 ]
 
-M_CST_DESTRUCT = struct_anon_15 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 133
+M_CST_DESTRUCT = struct_anon_15 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 139
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 138
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 144
 class struct_anon_16(Structure):
     pass
 
@@ -842,9 +844,9 @@ struct_anon_16._fields_ = [
     ('cstName', c_char * 128),
 ]
 
-M_CST_START = struct_anon_16 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 138
+M_CST_START = struct_anon_16 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 144
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 143
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 149
 class struct_anon_17(Structure):
     pass
 
@@ -857,9 +859,9 @@ struct_anon_17._fields_ = [
     ('cstName', c_char * 128),
 ]
 
-M_CST_STOP = struct_anon_17 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 143
+M_CST_STOP = struct_anon_17 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 149
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 149
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 155
 class struct_anon_18(Structure):
     pass
 
@@ -874,9 +876,9 @@ struct_anon_18._fields_ = [
     ('visionEnabled', c_int),
 ]
 
-M_CST_SET_VISUAL = struct_anon_18 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 149
+M_CST_SET_VISUAL = struct_anon_18 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 155
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 155
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 161
 class struct_anon_19(Structure):
     pass
 
@@ -891,9 +893,9 @@ struct_anon_19._fields_ = [
     ('hapticEnabled', c_int),
 ]
 
-M_CST_SET_HAPTIC = struct_anon_19 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 155
+M_CST_SET_HAPTIC = struct_anon_19 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 161
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 161
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 167
 class struct_anon_20(Structure):
     pass
 
@@ -908,9 +910,9 @@ struct_anon_20._fields_ = [
     ('lambdaVal', c_double),
 ]
 
-M_CST_SET_LAMBDA = struct_anon_20 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 161
+M_CST_SET_LAMBDA = struct_anon_20 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 167
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 168
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 174
 class struct_anon_21(Structure):
     pass
 
@@ -927,13 +929,98 @@ struct_anon_21._fields_ = [
     ('cursorZ', c_double),
 ]
 
-M_CST_DATA = struct_anon_21 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 168
+M_CST_DATA = struct_anon_21 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 174
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 182
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 183
 class struct_anon_22(Structure):
     pass
 
 struct_anon_22.__slots__ = [
+    'header',
+    'cupsName',
+    'escapeAngle',
+    'pendulumLength',
+    'ballMass',
+    'cartMass',
+]
+struct_anon_22._fields_ = [
+    ('header', MSG_HEADER),
+    ('cupsName', c_char * 128),
+    ('escapeAngle', c_double),
+    ('pendulumLength', c_double),
+    ('ballMass', c_double),
+    ('cartMass', c_double),
+]
+
+M_CUPS_CREATE = struct_anon_22 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 183
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 188
+class struct_anon_23(Structure):
+    pass
+
+struct_anon_23.__slots__ = [
+    'header',
+    'cupsName',
+]
+struct_anon_23._fields_ = [
+    ('header', MSG_HEADER),
+    ('cupsName', c_char * 128),
+]
+
+M_CUPS_DESTRUCT = struct_anon_23 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 188
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 193
+class struct_anon_24(Structure):
+    pass
+
+struct_anon_24.__slots__ = [
+    'header',
+    'cupsName',
+]
+struct_anon_24._fields_ = [
+    ('header', MSG_HEADER),
+    ('cupsName', c_char * 128),
+]
+
+M_CUPS_START = struct_anon_24 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 193
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 198
+class struct_anon_25(Structure):
+    pass
+
+struct_anon_25.__slots__ = [
+    'header',
+    'cupsName',
+]
+struct_anon_25._fields_ = [
+    ('header', MSG_HEADER),
+    ('cupsName', c_char * 128),
+]
+
+M_CUPS_STOP = struct_anon_25 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 198
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 204
+class struct_anon_26(Structure):
+    pass
+
+struct_anon_26.__slots__ = [
+    'header',
+    'ballPos',
+    'cartPos',
+]
+struct_anon_26._fields_ = [
+    ('header', MSG_HEADER),
+    ('ballPos', c_double),
+    ('cartPos', c_double),
+]
+
+M_CUPS_DATA = struct_anon_26 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 204
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 218
+class struct_anon_27(Structure):
+    pass
+
+struct_anon_27.__slots__ = [
     'header',
     'posX',
     'posY',
@@ -946,7 +1033,7 @@ struct_anon_22.__slots__ = [
     'forceZ',
     'collisions',
 ]
-struct_anon_22._fields_ = [
+struct_anon_27._fields_ = [
     ('header', MSG_HEADER),
     ('posX', c_double),
     ('posY', c_double),
@@ -960,179 +1047,179 @@ struct_anon_22._fields_ = [
     ('collisions', (c_char * 128) * 4),
 ]
 
-M_HAPTIC_DATA_STREAM = struct_anon_22 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 182
+M_HAPTIC_DATA_STREAM = struct_anon_27 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 218
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 188
-class struct_anon_23(Structure):
-    pass
-
-struct_anon_23.__slots__ = [
-    'header',
-    'objectName',
-    'enabled',
-]
-struct_anon_23._fields_ = [
-    ('header', MSG_HEADER),
-    ('objectName', c_char * 128),
-    ('enabled', c_int),
-]
-
-M_HAPTICS_SET_ENABLED = struct_anon_23 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 188
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 194
-class struct_anon_24(Structure):
-    pass
-
-struct_anon_24.__slots__ = [
-    'header',
-    'effectName',
-    'enabled',
-]
-struct_anon_24._fields_ = [
-    ('header', MSG_HEADER),
-    ('effectName', c_char * 128),
-    ('enabled', c_int),
-]
-
-M_HAPTICS_SET_ENABLED_WORLD = struct_anon_24 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 194
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 200
-class struct_anon_25(Structure):
-    pass
-
-struct_anon_25.__slots__ = [
-    'header',
-    'objectName',
-    'stiffness',
-]
-struct_anon_25._fields_ = [
-    ('header', MSG_HEADER),
-    ('objectName', c_char * 128),
-    ('stiffness', c_double),
-]
-
-M_HAPTICS_SET_STIFFNESS = struct_anon_25 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 200
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 206
-class struct_anon_26(Structure):
-    pass
-
-struct_anon_26.__slots__ = [
-    'header',
-    'bWidth',
-    'bHeight',
-]
-struct_anon_26._fields_ = [
-    ('header', MSG_HEADER),
-    ('bWidth', c_double),
-    ('bHeight', c_double),
-]
-
-M_HAPTICS_BOUNDING_PLANE = struct_anon_26 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 206
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 213
-class struct_anon_27(Structure):
-    pass
-
-struct_anon_27.__slots__ = [
-    'header',
-    'effectName',
-    'direction',
-    'magnitude',
-]
-struct_anon_27._fields_ = [
-    ('header', MSG_HEADER),
-    ('effectName', c_char * 128),
-    ('direction', c_double),
-    ('magnitude', c_double),
-]
-
-M_HAPTICS_CONSTANT_FORCE_FIELD = struct_anon_27 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 213
-
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 219
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 224
 class struct_anon_28(Structure):
     pass
 
 struct_anon_28.__slots__ = [
     'header',
-    'effectName',
-    'viscosityMatrix',
+    'objectName',
+    'enabled',
 ]
 struct_anon_28._fields_ = [
     ('header', MSG_HEADER),
-    ('effectName', c_char * 128),
-    ('viscosityMatrix', c_double * 9),
+    ('objectName', c_char * 128),
+    ('enabled', c_int),
 ]
 
-M_HAPTICS_VISCOSITY_FIELD = struct_anon_28 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 219
+M_HAPTICS_SET_ENABLED = struct_anon_28 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 224
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 224
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 230
 class struct_anon_29(Structure):
     pass
 
 struct_anon_29.__slots__ = [
     'header',
     'effectName',
+    'enabled',
 ]
 struct_anon_29._fields_ = [
     ('header', MSG_HEADER),
     ('effectName', c_char * 128),
+    ('enabled', c_int),
 ]
 
-M_HAPTICS_FREEZE_EFFECT = struct_anon_29 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 224
+M_HAPTICS_SET_ENABLED_WORLD = struct_anon_29 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 230
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 229
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 236
 class struct_anon_30(Structure):
     pass
 
 struct_anon_30.__slots__ = [
     'header',
-    'effectName',
+    'objectName',
+    'stiffness',
 ]
 struct_anon_30._fields_ = [
     ('header', MSG_HEADER),
-    ('effectName', c_char * 128),
+    ('objectName', c_char * 128),
+    ('stiffness', c_double),
 ]
 
-M_HAPTICS_REMOVE_WORLD_EFFECT = struct_anon_30 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 229
+M_HAPTICS_SET_STIFFNESS = struct_anon_30 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 236
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 235
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 242
 class struct_anon_31(Structure):
     pass
 
 struct_anon_31.__slots__ = [
     'header',
-    'objectName',
-    'enabled',
+    'bWidth',
+    'bHeight',
 ]
 struct_anon_31._fields_ = [
     ('header', MSG_HEADER),
-    ('objectName', c_char * 128),
-    ('enabled', c_int),
+    ('bWidth', c_double),
+    ('bHeight', c_double),
 ]
 
-M_GRAPHICS_SET_ENABLED = struct_anon_31 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 235
+M_HAPTICS_BOUNDING_PLANE = struct_anon_31 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 242
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 240
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 249
 class struct_anon_32(Structure):
     pass
 
 struct_anon_32.__slots__ = [
     'header',
-    'color',
+    'effectName',
+    'direction',
+    'magnitude',
 ]
 struct_anon_32._fields_ = [
     ('header', MSG_HEADER),
-    ('color', c_float * 4),
+    ('effectName', c_char * 128),
+    ('direction', c_double),
+    ('magnitude', c_double),
 ]
 
-M_GRAPHICS_CHANGE_BG_COLOR = struct_anon_32 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 240
+M_HAPTICS_CONSTANT_FORCE_FIELD = struct_anon_32 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 249
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 253
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 255
 class struct_anon_33(Structure):
     pass
 
 struct_anon_33.__slots__ = [
+    'header',
+    'effectName',
+    'viscosityMatrix',
+]
+struct_anon_33._fields_ = [
+    ('header', MSG_HEADER),
+    ('effectName', c_char * 128),
+    ('viscosityMatrix', c_double * 9),
+]
+
+M_HAPTICS_VISCOSITY_FIELD = struct_anon_33 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 255
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 260
+class struct_anon_34(Structure):
+    pass
+
+struct_anon_34.__slots__ = [
+    'header',
+    'effectName',
+]
+struct_anon_34._fields_ = [
+    ('header', MSG_HEADER),
+    ('effectName', c_char * 128),
+]
+
+M_HAPTICS_FREEZE_EFFECT = struct_anon_34 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 260
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 265
+class struct_anon_35(Structure):
+    pass
+
+struct_anon_35.__slots__ = [
+    'header',
+    'effectName',
+]
+struct_anon_35._fields_ = [
+    ('header', MSG_HEADER),
+    ('effectName', c_char * 128),
+]
+
+M_HAPTICS_REMOVE_WORLD_EFFECT = struct_anon_35 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 265
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 271
+class struct_anon_36(Structure):
+    pass
+
+struct_anon_36.__slots__ = [
+    'header',
+    'objectName',
+    'enabled',
+]
+struct_anon_36._fields_ = [
+    ('header', MSG_HEADER),
+    ('objectName', c_char * 128),
+    ('enabled', c_int),
+]
+
+M_GRAPHICS_SET_ENABLED = struct_anon_36 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 271
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 276
+class struct_anon_37(Structure):
+    pass
+
+struct_anon_37.__slots__ = [
+    'header',
+    'color',
+]
+struct_anon_37._fields_ = [
+    ('header', MSG_HEADER),
+    ('color', c_float * 4),
+]
+
+M_GRAPHICS_CHANGE_BG_COLOR = struct_anon_37 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 276
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 289
+class struct_anon_38(Structure):
+    pass
+
+struct_anon_38.__slots__ = [
     'header',
     'objectName',
     'height',
@@ -1144,7 +1231,7 @@ struct_anon_33.__slots__ = [
     'rotation',
     'color',
 ]
-struct_anon_33._fields_ = [
+struct_anon_38._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('height', c_double),
@@ -1157,13 +1244,13 @@ struct_anon_33._fields_ = [
     ('color', c_float * 4),
 ]
 
-M_GRAPHICS_PIPE = struct_anon_33 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 253
+M_GRAPHICS_PIPE = struct_anon_38 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 289
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 267
-class struct_anon_34(Structure):
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 303
+class struct_anon_39(Structure):
     pass
 
-struct_anon_34.__slots__ = [
+struct_anon_39.__slots__ = [
     'header',
     'objectName',
     'aLength',
@@ -1176,7 +1263,7 @@ struct_anon_34.__slots__ = [
     'position',
     'color',
 ]
-struct_anon_34._fields_ = [
+struct_anon_39._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('aLength', c_double),
@@ -1190,30 +1277,30 @@ struct_anon_34._fields_ = [
     ('color', c_float * 4),
 ]
 
-M_GRAPHICS_ARROW = struct_anon_34 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 267
+M_GRAPHICS_ARROW = struct_anon_39 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 303
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 273
-class struct_anon_35(Structure):
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 309
+class struct_anon_40(Structure):
     pass
 
-struct_anon_35.__slots__ = [
+struct_anon_40.__slots__ = [
     'header',
     'objectName',
     'color',
 ]
-struct_anon_35._fields_ = [
+struct_anon_40._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('color', c_float * 4),
 ]
 
-M_GRAPHICS_CHANGE_OBJECT_COLOR = struct_anon_35 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 273
+M_GRAPHICS_CHANGE_OBJECT_COLOR = struct_anon_40 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 309
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 282
-class struct_anon_36(Structure):
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 318
+class struct_anon_41(Structure):
     pass
 
-struct_anon_36.__slots__ = [
+struct_anon_41.__slots__ = [
     'header',
     'objectName',
     'numDots',
@@ -1221,7 +1308,7 @@ struct_anon_36.__slots__ = [
     'direction',
     'magnitude',
 ]
-struct_anon_36._fields_ = [
+struct_anon_41._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('numDots', c_int),
@@ -1230,13 +1317,13 @@ struct_anon_36._fields_ = [
     ('magnitude', c_double),
 ]
 
-M_GRAPHICS_MOVING_DOTS = struct_anon_36 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 282
+M_GRAPHICS_MOVING_DOTS = struct_anon_41 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 318
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 292
-class struct_anon_37(Structure):
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 328
+class struct_anon_42(Structure):
     pass
 
-struct_anon_37.__slots__ = [
+struct_anon_42.__slots__ = [
     'header',
     'objectName',
     'sizeX',
@@ -1245,7 +1332,7 @@ struct_anon_37.__slots__ = [
     'localPosition',
     'color',
 ]
-struct_anon_37._fields_ = [
+struct_anon_42._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('sizeX', c_double),
@@ -1255,20 +1342,20 @@ struct_anon_37._fields_ = [
     ('color', c_float * 4),
 ]
 
-M_GRAPHICS_SHAPE_BOX = struct_anon_37 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 292
+M_GRAPHICS_SHAPE_BOX = struct_anon_42 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 328
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 300
-class struct_anon_38(Structure):
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 336
+class struct_anon_43(Structure):
     pass
 
-struct_anon_38.__slots__ = [
+struct_anon_43.__slots__ = [
     'header',
     'objectName',
     'radius',
     'localPosition',
     'color',
 ]
-struct_anon_38._fields_ = [
+struct_anon_43._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('radius', c_double),
@@ -1276,13 +1363,13 @@ struct_anon_38._fields_ = [
     ('color', c_float * 4),
 ]
 
-M_GRAPHICS_SHAPE_SPHERE = struct_anon_38 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 300
+M_GRAPHICS_SHAPE_SPHERE = struct_anon_43 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 336
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 309
-class struct_anon_39(Structure):
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 345
+class struct_anon_44(Structure):
     pass
 
-struct_anon_39.__slots__ = [
+struct_anon_44.__slots__ = [
     'header',
     'objectName',
     'innerRadius',
@@ -1290,7 +1377,7 @@ struct_anon_39.__slots__ = [
     'localPosition',
     'color',
 ]
-struct_anon_39._fields_ = [
+struct_anon_44._fields_ = [
     ('header', MSG_HEADER),
     ('objectName', c_char * 128),
     ('innerRadius', c_double),
@@ -1299,249 +1386,279 @@ struct_anon_39._fields_ = [
     ('color', c_float * 4),
 ]
 
-M_GRAPHICS_SHAPE_TORUS = struct_anon_39 # /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 309
+M_GRAPHICS_SHAPE_TORUS = struct_anon_44 # /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 345
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 1
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 1
 try:
     DEFAULT_IP = 'localhost:10000'
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 2
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 2
 try:
     MAX_PACKET_LENGTH = 8192
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 3
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 3
 try:
     MAX_STRING_LENGTH = 128
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 6
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 6
 try:
     TEST_PACKET = 9000
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 10
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 10
 try:
     SESSION_START = 1
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 11
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 11
 try:
     SESSION_END = 2
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 12
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 12
 try:
     TRIAL_START = 3
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 13
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 13
 try:
     TRIAL_END = 4
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 14
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 14
 try:
     START_RECORDING = 5
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 15
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 15
 try:
     STOP_RECORDING = 6
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 16
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 16
 try:
     REMOVE_OBJECT = 7
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 17
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 17
 try:
     KEYPRESS = 8
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 18
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 18
 try:
     PAUSE_RECORDING = 9
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 19
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 19
 try:
     RESUME_RECORDING = 10
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 20
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 20
 try:
     RESET_WORLD = 11
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 23
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 23
 try:
     CST_CREATE = 500
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 24
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 24
 try:
     CST_DESTRUCT = 501
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 25
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 25
 try:
     CST_START = 502
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 26
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 26
 try:
     CST_STOP = 503
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 27
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 27
 try:
     CST_SET_VISUAL = 504
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 28
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 28
 try:
     CST_SET_HAPTIC = 505
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 29
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 29
 try:
     CST_SET_LAMBDA = 506
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 30
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 30
 try:
     CST_DATA = 507
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 33
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 31
+try:
+    CUPS_CREATE = 508
+except:
+    pass
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 32
+try:
+    CUPS_DESTRUCT = 509
+except:
+    pass
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 33
+try:
+    CUPS_START = 510
+except:
+    pass
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 34
+try:
+    CUPS_STOP = 511
+except:
+    pass
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 35
+try:
+    CUPS_DATA = 512
+except:
+    pass
+
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 38
 try:
     HAPTIC_DATA_STREAM = 1000
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 34
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 39
 try:
     HAPTICS_SET_ENABLED = 1001
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 35
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 40
 try:
     HAPTICS_SET_ENABLED_WORLD = 1002
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 36
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 41
 try:
     HAPTICS_SET_STIFFNESS = 1008
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 37
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 42
 try:
     HAPTICS_BOUNDING_PLANE = 1009
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 38
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 43
 try:
     HAPTICS_CONSTANT_FORCE_FIELD = 1010
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 39
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 44
 try:
     HAPTICS_VISCOSITY_FIELD = 1011
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 40
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 45
 try:
     HAPTICS_FREEZE_EFFECT = 1012
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 41
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 46
 try:
     HAPTICS_REMOVE_WORLD_EFFECT = 1013
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 44
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 49
 try:
     GRAPHICS_SET_ENABLED = 2000
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 45
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 50
 try:
     GRAPHICS_CHANGE_BG_COLOR = 2001
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 46
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 51
 try:
     GRAPHICS_PIPE = 2002
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 47
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 52
 try:
     GRAPHICS_ARROW = 2003
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 48
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 53
 try:
     GRAPHICS_CHANGE_OBJECT_COLOR = 2004
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 49
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 54
 try:
     GRAPHICS_MOVING_DOTS = 2014
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 50
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 55
 try:
     GRAPHICS_SHAPE_BOX = 2046
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 51
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 56
 try:
     GRAPHICS_SHAPE_SPHERE = 2050
 except:
     pass
 
-# /home/mfl24/Documents/chaiProjects/hapticEnvironment/common/messageDefinitions.h: 52
+# /home/mfl24/Documents/RNEL_GIT/haptic_environment_robot_control/common/messageDefinitions.h: 57
 try:
     GRAPHICS_SHAPE_TORUS = 2051
 except:

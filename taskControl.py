@@ -19,7 +19,7 @@ Config.set('graphics', 'width', 900)
 Config.set('graphics', 'height', 700)
 Config.set('graphics', 'resizable', False)
 from kivy.app import App
-from kivy.core.window import Window
+# from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button 
 from kivy.uix.treeview import TreeView, TreeViewLabel
@@ -28,6 +28,8 @@ from kivy.uix.filechooser import FileChooserIconView
 from kivy.uix.label import Label
 from functools import partial
 from kivy.properties import BooleanProperty
+import pymongo 
+from datetime import date 
 
 class TaskControl(BoxLayout):
   def __init__(self, **kwargs):
@@ -39,6 +41,10 @@ class TaskControl(BoxLayout):
     client.call("addModule", 2, Globals.IPADDR, Globals.PORT)
     client.call("subscribeTo", 2, 1)
     
+    pymongoClient = pymongo.MongoClient(Globals.PYMONGO_IP, Globals.PYMONGO_PORT)
+    database = pymongoClient[Globals.PYMONGO_DATABASE]
+    self.collection = database[Globals.PYMONGO_COLLECTION]
+
     self.listenerThread = Thread(target=self.listener)
     self.listenerThread.daemon = True
     
@@ -52,7 +58,7 @@ class TaskControl(BoxLayout):
 
   def setSubjectName(self, text):
     self.sessionInfo["subjectName"] = text 
-  
+
   def initializeTreeView(self):
     self.tv = self.get_root_window().children[-1].ids["experimentRecords"]
     self.tv.bind(minimum_height=self.tv.setter('height'))
@@ -65,7 +71,18 @@ class TaskControl(BoxLayout):
       if k not in self.sm.taskVars.keys():
         self.sm.taskVars[k] = "None"
       infoNode = self.tv.add_node(TreeViewLabel(text=k + ": " + str(self.sm.taskVars[k])), trialNode)
-  
+    
+    ## MDF Integration 
+    shouldRecord = self.get_root_window().children[-1].ids["recordData"].active
+    if shouldRecord == True:
+      saveDict = self.pymongoDoc.copy()
+      saveDict["trialNum"] = trialNum
+      for k in self.sm.taskVars["GUITree"]:
+        if k not in self.sm.taskVars.keys():
+          self.sm.taskVars[k] = "None"
+        saveDict[k] = self.sm.taskVars[k]
+      self.collection.insert_one(saveDict)
+
   def chooseSaveDir(self):
     filePopup = FilePopup(titleText="Choose Save Directory", canBeDir=True, buttonText="Select Folder")
     filePopup.open()
@@ -114,35 +131,37 @@ class TaskControl(BoxLayout):
     self.sm = taskSM
     self.sm.taskVars["taskControl"] = self
     
-    saveConfig = {"saveFilePrefix": saveFilePrefix}
-    saveParams = self.sm.config["save_params"]
-    for fileName in saveParams.keys():
-      saveConfig[fileName] = [getattr(md, x) for x in saveParams[fileName]]
-    self.loggingProcess = mp.Process(target=loggerFunction, args=(saveConfig,))
-    self.loggingProcess.start()
-    time.sleep(1)
-
     shouldRecord = self.get_root_window().children[-1].ids["recordData"].active
     if shouldRecord == True:
       mocapRecord = self.get_root_window().children[-1].ids["mocapData"].active 
       emgRecord = self.get_root_window().children[-1].ids["emgData"].active 
       
-      startRecording = md.M_START_RECORDING()
-      startRecording.header.msg_type = c_int(md.START_RECORDING)
-      fileName = create_string_buffer(str.encode(saveFilePrefix+"_trial.data"), md.MAX_STRING_LENGTH)
-      fileNamePtr = (c_char_p) (addressof(fileName))
-      startRecording.filename = fileNamePtr.value
-      packet = MR.makeMessage(startRecording)
-      MR.sendMessage(packet)
-      
-      if mocapRecord == True:
-        mocapClient, mocapSocket = Globals.getMocapClient()
-        mocapClient.sendCommand(2, "StartRecording", mocapSocket, Globals.MOCAP_IP,\
-                                Globals.MOCAP_PORT)
-      if emgRecord == True:
-        emgCommandSocket = Globals.getEMGCommand()
-        emgStreamSocket = Globals.getEMGStream()
-        emgCommandSocket.sendall(b'TRIGGER START\r\n\r\n')
+      self.pymongoDoc = {}
+      numSessions = self.collection.count_documents({"subjectName":self.sessionInfo["subjectName"]})
+      print(numSessions)
+      if numSessions == 0:
+        self.sessionInfo["sessionNum"] = 1
+      else:
+        self.sessionInfo["sessionNum"] = self.collection.find().sort({"sessionNum":-1}).limit(1)
+      self.pymongoDoc["subjectName"] = self.sessionInfo["subjectName"]
+      self.pymongoDoc["sessionNum"] = self.sessionInfo["sessionNum"]
+      self.pymongoDoc["experimentDate"] = date.today().strftime("%m-%d-%Y")
+      self.pymongoDoc["taskName"] = self.sessionInfo["taskName"]
+      self.pymongoDoc["configFile"] = self.sessionInfo["configFile"]
+      self.pymongoDoc["saveDir"] = self.sessionInfo["saveDir"]
+      self.pymongoDoc["emgRecord"] = emgRecord 
+      self.pymongoDoc["mocapRecord"] = mocapRecord
+      self.collection.insert_one(self.pymongoDoc.copy())
+
+      saveConfig = {"saveFilePrefix": saveFilePrefix}
+      saveParams = self.sm.config["save_params"]
+      for fileName in saveParams.keys():
+        saveConfig[fileName] = [getattr(md, x) for x in saveParams[fileName]]
+      self.loggingProcess = mp.Process(target=loggerFunction, args=(saveConfig, emgRecord,\
+                                      mocapRecord, self.sessionInfo, ))
+      self.loggingProcess.start()
+      time.sleep(1.5)
+    
     
     self.get_root_window().children[-1].ids["pauseButton"].disabled = False
     self.smThread = Thread(target=self.sm.run)
@@ -182,16 +201,8 @@ class TaskControl(BoxLayout):
       stopRecording.header.msg_type = c_int(md.STOP_RECORDING)
       packet = MR.makeMessage(stopRecording)
       MR.sendMessage(packet)
-      time.sleep(0.5)
-      if mocapRecord == True:
-        mocapClient, mocapSocket = Globals.getMocapClient()
-        mocapClient.sendCommand(2, "StopRecording", mocapSocket, Globals.MOCAP_IP,\
-                                Globals.MOCAP_PORT)
-      if emgRecord == True:
-        emgCommandSocket = Globals.getEMGCommand()
-        emgStreamSocket = Globals.getEMGStream()
-        emgCommandSocket.sendall(b'TRIGGER STOP\r\n\r\n')
-    self.loggingProcess.join()
+
+      self.loggingProcess.join()
     self.sessionInfo = {}
     resetWorld = md.M_RESET_WORLD()
     resetWorld.header.msg_type = md.RESET_WORLD
@@ -251,7 +262,8 @@ class TaskControlApp(App):
     sessionStart.header.msg_type = c_int(md.SESSION_START)
     packet = MR.makeMessage(sessionStart)
     MR.sendMessage(packet)
-  
+    time.sleep(1)
+
   def on_stop(self):
     sessionStop = md.M_SESSION_END()
     sessionStop.header.msg_type = c_int(md.SESSION_END)
@@ -261,4 +273,21 @@ class TaskControlApp(App):
 
 
 if __name__ == "__main__":
+  # import kivy
+  # kivy.require("1.9.1")
+  # from kivy import Config 
+  # Config.set('graphics', 'multisamples', '0')
+  # Config.set('graphics', 'width', 900)
+  # Config.set('graphics', 'height', 700)
+  # Config.set('graphics', 'resizable', False)
+  # from kivy.app import App
+  from kivy.core.window import Window
+  # from kivy.uix.boxlayout import BoxLayout
+  # from kivy.uix.button import Button 
+  # from kivy.uix.treeview import TreeView, TreeViewLabel
+  # from kivy.uix.popup import Popup
+  # from kivy.uix.filechooser import FileChooserIconView
+  # from kivy.uix.label import Label
+  # from functools import partial
+  # from kivy.properties import BooleanProperty
   TaskControlApp().run()

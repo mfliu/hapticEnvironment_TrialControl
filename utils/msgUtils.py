@@ -8,6 +8,10 @@ import Messenger as MR
 import struct 
 import inspect 
 
+allMD = inspect.getmembers(md)
+mdKeys = [x[0] for x in allMD]
+mdVals = [x[1] for x in allMD]
+
 def makeMessage(msgParams):
   name = next(iter(msgParams)) #.keys()[0]
   msgInfo = msgParams[name]
@@ -34,3 +38,38 @@ def makeMessage(msgParams):
   packet = MR.makeMessage(msgStruct)
   MR.sendMessage(packet)
   return packet
+
+def messageToDict(packet):
+  msgHeader = md.MSG_HEADER() 
+  MR.readMessage(packet, msgHeader)
+  msgNum = msgHeader.serial_no
+  msgTime = msgHeader.timestamp
+  msgType = msgHeader.msg_type
+  msgName = "M_" + mdKeys[mdVals.index(msgType)]
+  msgStruct = getattr(md, msgName)()
+  MR.readMessage(packet, msgStruct)
+  msgDict = {"msgTime": msgTime, "msgNum":msgNum, "msgType":mdKeys[mdVals.index(msgType)]}
+  for key in msgStruct.__slots__:
+    if key != "header":
+      fieldObj = getattr(msgStruct, key)
+      fieldType = str(type(fieldObj))
+      if fieldType.find("c_char_Array") > -1:
+        byteString = getattr(msgStruct, key)
+        unpacked = struct.unpack(str(md.MAX_STRING_LENGTH) + "s", byteString)
+        msgDict[key] = unpacked[0].decode("utf-8")
+      elif fieldType.find("c_float_Array") > -1:
+        arrayLen = fieldType.split("c_float_Array")[-1].split("_")[-1].split("'")[0]
+        floatArray = list(struct.unpack(arrayLen + "f", fieldObj))
+        msgDict[key] = floatArray
+      elif fieldType.find("c_double_Array") > -1:
+        arrayLen = fieldType.split("c_double_Array")[-1].split("_")[-1].split("'")[0]
+        doubleArray = list(struct.unpack(arrayLen + "d", fieldObj))
+        msgDict[key] = doubleArray
+      elif fieldType.find("c_int_Array") > -1:
+        arrayLen = fieldType.split("c_int_Array")[-1].split("_")[-1].split("'")[0]
+        intArray = list(struct.unpack(arrayLen + "i", fieldObj))
+        msgDict[key] = intArray
+      else:
+        msgDict[key] = getattr(msgStruct, key)
+  return msgDict
+

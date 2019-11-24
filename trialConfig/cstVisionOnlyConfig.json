@@ -2,9 +2,9 @@
   "name": "cst",
   "states": ["start", "running"],
   "startState": "start", 
-  "save_params":{"hapticData.data":["HAPTIC_DATA_STREAM"], 
-      "cstData.data":["CST_DATA"],
-      "msgLog.log":["CST_START", "CST_STOP", "CST_CREATE", 
+  "save_params":{"hapticData":["HAPTIC_DATA_STREAM"], 
+      "cstData":["CST_DATA"],
+      "msgLog":["CST_START", "CST_STOP", "CST_CREATE", 
         "CST_SET_LAMBDA", "CST_SET_VISUAL", "CST_SET_HAPTIC",
         "TRIAL_START", "TRIAL_END"]
     },
@@ -17,7 +17,7 @@
         "lambdaVal":1.0, 
         "forceMagnitude":1.0, 
         "visionEnabled": 1, 
-        "hapticEnabled":1
+        "hapticEnabled":0
       }
     }
   ],

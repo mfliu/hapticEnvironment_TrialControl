@@ -3,23 +3,25 @@ import msgpackrpc
 import socket 
 import sys 
 import platform
+import os 
+#import pymongo 
 
 MODULE_NUM = 2
-HOME_PATH = "/home/mfl24/Documents/chaiProjects/hapticEnvironment_TrialControl/"
-UTILS_PATH = "/home/mfl24/Documents/chaiProjects/hapticEnvironment_TrialControl/utils/"
-NATNET_PATH = "/home/mfl24/Documents/chaiProjects/NatNetSDK/Samples/PythonClient/"
+HOME_PATH = "/home/mfl24/Documents/RNEL_GIT/haptic_environment_task_control/"
+UTILS_PATH = os.path.join(HOME_PATH, "utils/")
+NATNET_PATH = "C:/Users/rnel-localadmin/Documents/ROBOT_SOFTWARE/NatNetSDK/Samples/PythonClient/"
 sys.path.append(NATNET_PATH)
 
 CHAI_DATA = md.M_HAPTIC_DATA_STREAM() 
 
 
-IPADDR = "127.0.0.1"
+IPADDR = "127.0.0.1" #"192.168.3.222"
 PORT = 9000
 
-LOGGER_IP = "127.0.0.1"
+LOGGER_IP = "127.0.0.1" #"192.168.3.222"
 LOGGER_PORT = 10000 
 
-RPC_IP = "127.0.0.1"
+RPC_IP = "127.0.0.1" #"192.168.3.221"
 RPC_PORT = 8080
 
 MOCAP_IP = "127.0.0.1"
@@ -29,7 +31,13 @@ EMG_COMMAND_IP = "127.0.0.1"
 EMG_COMMAND_PORT = 50040
 
 EMG_STREAM_IP = "127.0.0.1"
-EMG_STREAM_PORT = 50043
+EMG_STREAM_PORT = 50041
+
+## PyMongo Integration for MDF
+PYMONGO_IP = "192.168.0.246"
+PYMONGO_PORT = 15213 
+PYMONGO_DATABASE = "sensorimotor"
+PYMONGO_COLLECTION = "raw_data"
 
 client = None 
 def getClient():
@@ -87,4 +95,11 @@ def getEMGStream():
     emgStreamSocket.connect((EMG_STREAM_IP, EMG_STREAM_PORT))
   return emgStreamSocket 
 
-
+#collection = None
+#def getPyMongoCollection():
+#  global collection 
+#  if collection == None:
+#    pymongoClient = pymongo.MongoClient(PYMONGO_IP, PYMONGO_PORT)
+#    database = pymongoClient[PYMONGO_DATABASE]
+#    collection = database[PYMONGO_COLLECTION]
+#  return collection

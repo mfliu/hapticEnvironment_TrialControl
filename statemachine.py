@@ -66,13 +66,27 @@ class StateMachine(object):
       if self.paused == True:
         continue
       currentState = self.states[self.currentState]
+      if self.currentState in self.config["TRIAL_START"]:
+        trialStart = md.M_TRIAL_START() 
+        trialStart.header.msg_type = md.TRIAL_START
+        trialStart.trialNum = self.taskVars["trialNum"]
+        packet = MR.makeMessage(trialStart)
+        MR.sendMessage(packet)
+        time.sleep(0.5)
       transition = currentState.entry(self.currentState, self)
-      #print(self.currentState, transition)
+      print(self.currentState, transition)
+      if self.currentState in self.config["TRIAL_END"]:
+        trialEnd = md.M_TRIAL_END() 
+        trialEnd.header.msg_type = md.TRIAL_END
+        packet = MR.makeMessage(trialEnd)
+        MR.sendMessage(packet)
+        time.sleep(0.5)
       nextStates = self.transitionTable[(self.currentState, transition)]
       if len(nextStates) > 1:
         nextState = random.choice(nextStates)
       else:
         nextState = nextStates[0]
+      
       if nextState == "end":
         return transition
       self.currentState = nextState
